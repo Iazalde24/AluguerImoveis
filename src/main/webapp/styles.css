@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #56205e; /* Fundo roxo */
+    padding: 20px;
+}
+
+.logo h1 {
+    color: white;
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 30px;
+    position: relative;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav ul li a::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -5px;
+    left: 0;
+    background-color: #f1c40f; /* Cor da linha (amarelo) */
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover::before, nav ul li a.active::before {
+    visibility: visible;
+    width: 100%;
+}
+
+nav ul li a.active {
+    color: #f1c40f; /* Cor do texto para o link ativo (amarelo) */
+}
+
+main {
+    padding: 20px;
+}
+
+#content {
+    margin-top: 20px;
+}
+/* Estilo para o menu do usuário */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #f1c40f;
+    padding: 3px;
+    background-color: white;
+}
+
+#dropdown-arrow {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.arrow-down {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    margin-left: 5px;
+}
+
+.arrow-up {
+    transform: rotate(-135deg);
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 100;
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.dropdown::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+    z-index: 1;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.dropdown ul li img {
+    width: 24px; /* Tamanho dos ícones */
+    height: 24px;
+    margin-right: 10px;
+    border: none; /* Sem borda */
+    border-radius: 0; /* Garantir que os ícones NÃO sejam redondos */
+}
+
+.dropdown ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown ul li a:hover {
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+
+.avatar.active .dropdown {
+    display: block;
+}
+
+.avatar.active #dropdown-arrow {
+    transform: rotate(-135deg); /* Altera a direção da seta */
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+ 
+}
+.imovel-block {
+    width: 300px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.imovel-block:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.imovel-image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+
+.imovel-info {
+    padding: 15px;
+    background-color: #fff;
+}
+
+.imovel-info h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.imovel-info p {
+    margin: 5px 0;
+}
+
+.imovel-info .disponível {
+    color: green;
+}
+
+.imovel-info .indisponível {
+    color: red;
+}
+
+.imovel-info .reservado {
+    color: orange;
+}

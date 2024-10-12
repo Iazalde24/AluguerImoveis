@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1336px;
+    height: 100vh; /* Adiciona altura total da tela */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.left-section {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Certifica que a imagem preenche a seção */
+    background-color: #f7f7f7;
+    border-radius: 10px 0 0 10px;
+    position: relative;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
+}
+
+.right-section {
+    width: 50%;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #610c5d;
+    position: relative;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+h1 {
+    color: #6c4d91; /* Tom de roxo */
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #6c4d91; /* Tom de roxo */
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-bottom: 2px solid #6c4d91;
+    font-size: 16px;
+    background-color: transparent;
+    box-shadow: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-bottom-color: #5a3c7d;
+    outline: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #6c4d91;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-shadow: 0px 5px 10px rgba(108, 77, 145, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #5a3c7d;
+    box-shadow: 0px 8px 15px rgba(108, 77, 145, 0.5);
+}
+
+p {
+    text-align: center;
+    color: #6c4d91; /* Tom de roxo */
+}
+
+p a {
+    color: #6c4d91; /* Tom de roxo */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}

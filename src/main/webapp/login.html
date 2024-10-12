@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="image-container">
+                <img src="R.jfif" alt="Imagem de fundo">
+            </div>
+        </div>
+        <div class="right-section" >
+            <div class="form-container" id="loginForm">
+                <h1>Entrar</h1>
+                <form id="loginFormContent">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="btn">Entrar</button>
+                    <br>
+                    <p>Ainda não tem uma conta? <a href="#" id="createAccount">Criar conta</a></p>
+                </form>
+            </div>
+            <div class="form-container hidden" id="registerForm">
+                <h1>Criar Conta</h1>
+                <form>
+                    <div class="input-group">
+                        <label for="emailCadastro">Email</label>
+                        <input type="email" id="emailCadastro" name="emailCadastro" placeholder="Digite seu email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="passwordCadastro">Senha</label>
+                        <input type="password" id="passwordCadastro" name="passwordCadastro" placeholder="Crie uma senha" required>
+                    </div>
+                   <br>
+                    <button type="submit" class="btn">Cadastrar</button>
+                   
+                    <p>Já tem uma conta? <a href="#" id="goToLogin">Entrar</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script1.js"></script>
+</body>
+</html>

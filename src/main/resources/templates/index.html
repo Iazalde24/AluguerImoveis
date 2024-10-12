@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu com Animação - Imóveis Moz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Imóveis Moz</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active" onclick="showContent('home')">Início</a></li>
+                <li><a href="#categorias" onclick="showContent('categorias')">Categorias</a></li>
+                <li><a href="#imoveis" onclick="showContent('imoveis')">Todos Imóveis</a></li>
+                <li><a href="#sobre" onclick="showContent('sobre')">Sobre Nós</a></li>
+                <li><a href="#contacto" onclick="showContent('contacto')">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <div class="user-menu">
+            <div class="avatar" id="user-avatar">
+                <img src="avatar.png" alt="Avatar" id="avatar-img">
+                <span id="dropdown-arrow" class="arrow-down"></span> <!-- Seta para o dropdown -->
+                <div class="dropdown" id="user-dropdown">
+                    <ul>
+                        <li><img src="edit-icon.png" alt="Editar Ícone"> <a href="#">Editar perfil</a></li>
+                        <li><img src="advertise-icon.png" alt="Divulgar Imóvel Ícone"> <a href="#">Divulgar meu imóvel</a></li>
+                        <li><img src="logout-icon.png" alt="Logout Ícone"> <a href="#">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+         </header>
+
+    <main>
+        <div id="content">
+           
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
