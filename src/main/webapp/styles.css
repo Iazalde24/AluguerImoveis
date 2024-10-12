@@ -234,3 +234,97 @@ main {
 .imovel-info .reservado {
     color: orange;
 }
+
+/* Estilo do dropdown submenu */
+nav ul li ul {
+    cursor: pointer;
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    top: 235%; /* Aumentando a distância para baixo */
+    left: 0;
+    background-color: #ffffff; /* Cor de fundo do submenu */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombreamento mais suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 10px;
+    list-style: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; /* Transições */
+    opacity: 0; /* Inicia como invisível */
+    transform: translateY(-20px); /* Animação de deslizamento */
+    z-index: 1000;
+    border: 1px solid #ddd; /* Borda suave */
+    visibility: hidden; /* Oculto inicialmente */
+}
+
+nav ul li:hover > ul {
+    display: block; /* Mostra o submenu ao passar o mouse */
+    opacity: 1; /* Torna visível */
+    transform: translateY(0); /* Animação de deslizamento */
+    visibility: visible; /* Faz o submenu visível */
+    transition-delay: 0.1s; /* Delay ao mostrar o submenu */
+}
+
+/* Alterando a visibilidade de forma sutil */
+nav ul li {
+    position: relative; /* Necessário para posicionar o submenu */
+}
+
+nav ul li:not(:hover) > ul {
+    opacity: 0; /* Torna invisível */
+    visibility: hidden; /* Faz o submenu invisível */
+    transition-delay: 0.2s; /* Delay ao esconder o submenu */
+}
+
+nav ul li ul li {
+    padding: 12px 15px; /* Aumentando o padding para mais espaço */
+    white-space: nowrap; /* Impede a quebra de linha */
+}
+
+nav ul li ul li a {
+    color: #333;
+    font-size: 14px; /* Aumentando o tamanho da fonte para os submenus */
+    display: block; /* Permite que o link ocupe toda a área do item */
+}
+
+nav ul li ul li a:hover {
+    background-color: #f1c40f; /* Fundo ao passar o mouse */
+    color: #fff; /* Cor do texto ao passar o mouse */
+}
+
+nav ul li ul li:hover {
+    background-color: #f9f9f9; /* Fundo mais suave ao passar o mouse */
+}
+
+/* Submenu de submenus (sub-submenu) */
+nav ul li ul li ul {
+    display: none; /* Escondido por padrão */
+    position: absolute;
+    left: 100%; /* Aparece à direita do submenu anterior */
+    top: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+nav ul li ul li:hover > ul {
+    display: block; /* Mostra o submenu secundário ao passar o mouse */
+    opacity: 1;
+    transform: translateY(0); /* Animação para sub-submenu também lateral */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul li {
+        margin-bottom: 10px;
+    }
+
+    nav ul li ul {
+        position: static;
+        opacity: 1;
+        transform: none;
+    }
+}
