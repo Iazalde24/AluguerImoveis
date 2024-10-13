@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu com Animação - Imóveis Moz</title>
+    <title>Menu com Animação - imobiliaria de Pemba</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="logo">
-            <h1>Imóveis Moz</h1>
+            <h1>Imobiliaria de Pemba</h1>
         </div>
         <nav>
-            <ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul id="nav-list">
                 <li><a href="#home" class="active" onclick="showContent('home')">Início</a></li>
                 <li class="dropdown-menu">
-                    <a href="#categorias" >Categorias</a>
+                    <a href="#">Categorias</a>
                     <ul class="submenu">
                         <li class="dropdown-menu">
                             <a href="#">Estado do Imóvel</a>
@@ -26,13 +31,13 @@
                             </ul>
                         </li>
                         <li class="dropdown-menu">
-                            <a href="#">Tipo de Imóvel</a>
+                            <a href="#">Tipo de imóvel</a>
                             <ul class="submenu">
                                 <li><a href="#">Apartamento</a></li>
                                 <li><a href="#">Casa</a></li>
                                 <li><a href="#">Terreno</a></li>
                                 <li><a href="#">Lojas</a></li>
-                                <li><a href="#">Escritorios</a></li>
+                                <li><a href="#">Escritórios</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-menu">
@@ -40,38 +45,55 @@
                             <ul class="submenu">
                                 <li><a href="#">Baixa-Paquite</a></li>
                                 <li><a href="#">Rua 12</a></li>
-                                <li><a href="#">Expansao</a></li>
+                                <li><a href="#">Expansão</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-
                 <li><a href="#imoveis" onclick="showContent('imoveis')">Todos Imóveis</a></li>
                 <li><a href="#sobre" onclick="showContent('sobre')">Sobre Nós</a></li>
-                <li><a href="#contacto" onclick="showContent('contacto')">Contacto</a></li>
+                <li><a href="#contacto" onclick="showContent('contacto')">Contato</a></li>
             </ul>
-        </nav>
-
-        <div class="user-menu">
-            <div class="avatar" id="user-avatar">
-                <img src="avatar.png" alt="Avatar" id="avatar-img">
-                <span id="dropdown-arrow" class="arrow-down"></span> <!-- Seta para o dropdown -->
-                <div class="dropdown" id="user-dropdown">
-                    <ul>
-                        <li><img src="edit-icon.png" alt="Editar Ícone"> <a href="#">Editar perfil</a></li>
-                        <li><img src="advertise-icon.png" alt="Divulgar Imóvel Ícone"> <a href="#">Divulgar meu imóvel</a></li>
-                        <li><img src="logout-icon.png" alt="Logout Ícone"> <a href="#">Logout</a></li>
-                    </ul>
-                </div>
+            <div class="auth-buttons">
+                <a href="#" class="button-login" onclick="showForm('login')">Login</a>
+                <a href="#" class="button-cadastro" onclick="showForm('register')">Cadastro</a>
             </div>
-        </div>
-         </header>
+        </nav>
+    </header>
 
     <main>
         <div id="content">
-           
+            <!-- Conteúdo da página -->
         </div>
     </main>
+
+    <!-- Login  -->
+    <div id="login-overlay" class="overlay">
+        <div class="form-container">
+            <span class="close-btn" onclick="closeForm('login')">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cadastro -->
+    <div id="register-overlay" class="overlay">
+        <div class="form-container">
+            <span class="close-btn" onclick="closeForm('register')">&times;</span>
+            <h2>Cadastro</h2>
+            <form id="register-form">
+                <input type="text" placeholder="Nome" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Senha" required>
+                <input type="password" placeholder="Confirmar Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
