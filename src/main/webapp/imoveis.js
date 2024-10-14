@@ -38,9 +38,9 @@ class Imovel {
 
 // Lista de imóveis com imagens
 const imoveis = [
-    new Imovel('Moradia T3 na Julius Nyerere', 'Moradia', 'Av. Julius Nyerere', '18,000', 'Disponível', 'Renda', '843567890', 'img/moradia.jpg'),
-    new Imovel('Apartamento T1 Sommershield', 'Apartamento', 'Sommershield', '95,000', 'Reservado', 'Renda', '843567890', 'img/apartamento.jpg'),
-    new Imovel('Escritório mobiliado', 'Escritório', 'Sommershield I', '110,000', 'Indisponível', 'Venda', '843567890', 'img/escritorio.jpg'),
+    new Imovel('Moradia T3 na Julius Nyerere', 'Moradia', 'Av. Julius Nyerere', '18,000', 'Disponível', 'Renda', '843567890', 'i3.jpeg'),
+    new Imovel('Apartamento T1 Sommershield', 'Apartamento', 'Sommershield', '95,000', 'Reservado', 'Renda', '843567890', 'i2.jpg'),
+    new Imovel('Escritório mobiliado', 'Escritório', 'Sommershield I', '110,000', 'Indisponível', 'Venda', '843567890', 'i.png'),
 ];
 
 // Seleciona o container principal onde os imóveis serão adicionados

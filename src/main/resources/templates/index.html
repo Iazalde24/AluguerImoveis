@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu com Animação - imobiliaria de Pemba</title>
+    <title>Imobiliaria de Pemba - Página Inicial</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <span class="bar"></span>
             </div>
             <ul id="nav-list">
-                <li><a href="#home" class="active" onclick="showContent('home')">Início</a></li>
+                <li><a href="index.html" class="active">Início</a></li>
                 <li class="dropdown-menu">
                     <a href="#">Categorias</a>
                     <ul class="submenu">
@@ -50,9 +50,9 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="#imoveis" onclick="showContent('imoveis')">Todos Imóveis</a></li>
-                <li><a href="#sobre" onclick="showContent('sobre')">Sobre Nós</a></li>
-                <li><a href="#contacto" onclick="showContent('contacto')">Contato</a></li>
+                <li><a href="imoveis.html">Todos Imóveis</a></li>
+                <li><a href="sobre-nos.html">Sobre Nós</a></li>
+                <li><a href="contato.html">Contato</a></li>
             </ul>
             <div class="auth-buttons">
                 <a href="#" class="button-login" onclick="showForm('login')">Login</a>
@@ -62,10 +62,19 @@
     </header>
 
     <main>
-        <div id="content">
-            <!-- Conteúdo da página -->
-        </div>
+        <section id="destaques" class="content-section">
+            <h2>Imóveis em Destaque</h2>
+            <div class="imoveis-grid">
+                <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
+                <script src="imoveis.js"></script>
+            </div>
+            
+        </section>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Imobiliaria de Pemba. Todos os direitos reservados.</p>
+    </footer>
 
     <!-- Login  -->
     <div id="login-overlay" class="overlay">

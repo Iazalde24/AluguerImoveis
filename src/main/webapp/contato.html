@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todos Imoveis - Imobiliaria de Pemba</title>
+    <title>Contato - Imobiliaria de Pemba</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -50,9 +50,9 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="imoveis.html" class="active">Todos Imóveis</a></li>
+                <li><a href="imoveis.html">Todos Imóveis</a></li>
                 <li><a href="sobre-nos.html">Sobre Nós</a></li>
-                <li><a href="contato.html">Contato</a></li>
+                <li><a href="contato.html" class="active">Contato</a></li>
             </ul>
             <div class="auth-buttons">
                 <a href="#" class="button-login" onclick="showForm('login')">Login</a>
@@ -62,18 +62,34 @@
     </header>
 
     <main>
-        <section id="destaques" class="content-section">
-            <h2>Todos Imoveis</h2>
-            <div class="imoveis-grid">
-                <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
-                <script src="imoveis.js"></script>
+        <section id="contato" class="content-section">
+            <h2>Entre em Contato</h2>
+            <p>Estamos aqui para ajudá-lo a transformar seus sonhos em realidade! Se tiver alguma dúvida,
+                 sugestão ou precisar de mais informações sobre nossos serviços, não hesite em nos contatar.
+                  Utilize o formulário abaixo e nossa equipe responderá rapidamente para garantir que você 
+                  tenha a melhor experiência possível. Na Imobiliaria de Pemba, a sua satisfação é a nossa
+                   prioridade!</p>
+            <form class="contact-form">
+                <input type="text" name="nome" placeholder="Seu Nome" required>
+                <input type="email" name="email" placeholder="Seu E-mail" required>
+                <input type="tel" name="telefone" placeholder="Seu Telefone">
+                <textarea name="mensagem" placeholder="Sua Mensagem" rows="5" required></textarea>
+                <button type="submit">Enviar Mensagem</button>
+            </form>
 
+            <div class="contact-info">
+                <h3>Informações de Contato</h3>
+                <p><strong>Endereço:</strong> Av. Bairro Cimento-Baixa, 4456, Pemba, Moçambique</p>
+                <p><strong>Telefone:</strong> +258 690 367 66</p>
+                <p><strong>E-mail:</strong> Imobiliariapemba@gmail.com</p>
+                <p><strong>Horário de Funcionamento:</strong> De Segunda a Sexta, das 8h às 19h</p>
             </div>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 Imobiliaria de Pemba. Todos os direitos reservados.</p>
     </footer>
+
     <!-- Login  -->
     <div id="login-overlay" class="overlay">
         <div class="form-container">
