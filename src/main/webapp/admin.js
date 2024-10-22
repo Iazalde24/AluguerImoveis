@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const properties = [
         { id: 1, title: 'Moradia T3 na Baixa-Paquite', location: 'Av. Marginal', price: '18,000', status: 'Disponível' },
-        { id: 2, title: 'Apartamento T1 ao pe da praia do Wimbe', location: 'Wimbe', price: '95,000', status: 'Reservado' }
+        { id: 2, title: 'Apartamento T1 ao pé da praia do Wimbe', location: 'Wimbe', price: '95,000', status: 'Reservado' }
     ];
 
     const propertyList = document.getElementById('propertyList');
@@ -55,11 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
             datasets: [{
                 label: 'Novos Usuários',
-                data: [30, 20, 50, 40, 60],
+                data: [50, 60, 70, 100, 80],
                 backgroundColor: '#4a148c'
             }]
         }
     });
 
+    // Initial render
     renderProperties();
 });
