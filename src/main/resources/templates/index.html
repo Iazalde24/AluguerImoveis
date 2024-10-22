@@ -1,860 +1,364 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu com Animação - Imóveis Moz</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Imóveis Moz</h1>
+        </div>
+    
+        <nav>
+            <ul>
+                <li><a href="#home" class="active" onclick="showContent('home')">Início</a></li>
+                <li><a href="#imoveis" onclick="showContent('imoveis')">Todos Imóveis</a></li>
+                <li><a href="#sobre" onclick="showContent('sobre')">Sobre Nós</a></li>
+                <li><a href="#contacto" onclick="showContent('contacto')">Contacto</a></li>
+                <!-- A opção de Gerenciar Imóveis, inicialmente oculta -->
+                <li id="manageImoveisItem" style="display: none;">
+                    <a href="#gerenciar" onclick="showContent('gerenciar')">Gerenciar Imóveis</a>
+                </li>
+            </ul>
+        </nav>
+    
+        <!-- Botões de autenticação -->
+        <div class="auth-buttons" id="auth-buttons">
+            <a href="#" class="button-login" onclick="showForm('login')">Login</a>
+            <a href="#" class="button-cadastro" onclick="showForm('register')">Cadastro</a>
+        </div>
+    
+        <!-- Avatar do usuário (escondido por padrão) -->
+        <div class="user-menu" id="user-menu" style="display: none;">
+            <div class="avatar" id="user-avatar">
+                <img src="avatar.png" alt="Avatar" id="avatar-img">
+                <span id="dropdown-arrow" class="arrow-down"></span>
+                <div class="dropdown" id="user-dropdown">
+                    <ul id="dropdown-menu">
+                        <!-- O link de administrador será inserido aqui via JavaScript se o usuário for admin -->
+                        <li><a href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+        <script src="script.js"></script>
+    </header>
+    
+    <main>
+        <section id="home" class="section active">
+        <section class="search-section">
+            <h3>Buscar Imóveis</h3>
+            <div class="search-filter">
+                <div class="search-container">
+                    <i data-feather="search"></i>
+                    <input type="text" id="searchInput" placeholder="Pesquisar imóveis...">
+                </div>
+                <select id="propertyType">
+                    <option value="">Tipo de Imóvel</option>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="terreno">Terreno</option>
+                </select>
+                <select id="location">
+                    <option value="">Localização</option>
+                    <option value="centro">Centro</option>
+                    <option value="wimbe">Wimbe</option>
+                    <option value="chuiba">Chuiba</option>
+                </select>
+                <button id="searchBtn" class="btn btn-primary">Buscar</button>
+            </div>
+        </section>
+        
+       
+        <section >
+            <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
 
-body {
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    padding-top: 80px;
-    padding-bottom: 60px;
-}
+        </section>
+        </section>
 
+        <section id="imoveis" class="section">
+       
+<div id="destaques" class="content-section">
+            <h2>Todos Imoveis</h2>
+     
+                <div id="imoveis-destaques-container" style="display: flex; flex-wrap: wrap;"></div>
+          </div>
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #56205e;
-    padding: 20px;
-    flex-wrap: wrap;
-    position: fixed; /* Modificado para fixo */
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-}
+        </section>
 
+        <section id="sobre" class="section">
+            <div class="content-section">
+                <h2>Sobre Nós</h2>
+                <p>A Imobiliária de Pemba é líder no mercado imobiliário em Pemba, oferecendo soluções personalizadas para compra, venda e aluguel de imóveis desde 2010. Nossa missão é fornecer experiências especializadas, unindo profundo conhecimento local com as mais avançadas tecnologias do setor.</p>
+                <p>Com uma equipe altamente comprometida e dedicada, nos orgulhamos de oferecer um serviço personalizado, pautado pela excelência e integridade. Somos a escolha ideal para quem deseja transformar os seus sonhos imobiliários em realidade em Pemba.</p>
+                <p>Seja você um comprador de primeira viagem, um investidor experiente ou alguém que procura o perfeito, a Imobiliária de Pemba está ao seu lado em cada etapa. Descubra por que somos uma referência em imóveis na cidade de Pemba.</p>
+                
+                <h3>Nossa Equipe</h3>
+                <div class="team-container">
+                    <div class="team-member">
+                        <img src="avatar.png" alt="Dom Edilson" class="team-image">
+                        <div class="team-member-info">
+                            <h4>Dom Edilson</h4>
+                            <p>Diretor Executivo</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="avatar.png" alt="MrYaza" class="team-image">
+                        <div class="team-member-info">
+                            <h4>MrYaza</h4>
+                            <p>Gerente de Vendas</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="avatar.png" alt="Dr. Tony" class="team-image">
+                        <div class="team-member-info">
+                            <h4>Dr. Tony</h4>
+                            <p>Promotor</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <h3>Testemunhos de Clientes</h3>
+                <div class="testimonials">
+                    <div class="testimonial">
+                        <p>"A Imobiliária de Pemba me ajudou a encontrar o apartamento perfeito! Serviço excepcional!"</p>
+                        <span>- Maria Antonio</span>
+                    </div>
+                    <div class="testimonial">
+                        <p>"Recomendo a todos! Profissionais competentes e atendimento diferenciado."</p>
+                        <span>- Juma Amisse</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-.logo h1 {
-    color: white;
-    margin: 0;
-}
+        <section id="contacto" class="section">
+            <div id="contato" class="content-section">
+                <h2>Entre em Contato</h2>
+                <p>Estamos aqui para ajudá-lo a transformar seus sonhos em realidade! Se tiver alguma dúvida, sugestão ou precisar de mais informações sobre nossos serviços, não hesite em nos contatar. Utilize o formulário abaixo e nossa equipe responderá rapidamente para garantir que você tenha a melhor experiência possível. Na Imobiliaria de Pemba, a sua satisfação é a nossa prioridade!</p>
+                
+                <form class="contact-form" method="POST" action="enviar_contato.php">
+                    <input type="text" name="nome" placeholder="Seu Nome" required>
+                    <input type="email" name="email" placeholder="Seu E-mail" required>
+                    <input type="tel" name="telefone" placeholder="Seu Telefone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    <textarea name="mensagem" placeholder="Sua Mensagem" rows="5" required></textarea>
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+    
+            </div>
+        </section>
+    </main>
+    <script src="imoveis.js" defer></script>
+    <script src="script.js"></script>
 
-nav ul {
-    list-style: none;
-    display: flex;
-}
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Imóveis</a></li>
+                    <li><a href="#">Sobre Nós</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul>
+                    <li>Telefone: (123) 456-7890</li>
+                    <li>Email: info@imobiliariaxyz.com</li>
+                    <li>Endereço: Av. Principal, 123 - Cidade</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Imobiliária XYZ. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+ <!-- Formulário de Login -->
+ <div id="login-overlay" class="overlay">
+    <div class="form-container">
+        <span class="close-btn" onclick="closeForm('login')">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="return login(event)">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Senha" required>
+            <button type="submit" class="button-login">Entrar</button>
+            <p class="form-footer">Não tem uma conta? <a href="#" onclick="showForm('register')">Cadastre-se</a></p>
+        </form>
+    </div>
+</div>
 
-nav ul li {
-    margin-right: 30px;
-    position: relative;
-}
+<!-- Formulário de Cadastro -->
+<div id="register-overlay" class="overlay">
+    <div class="form-container">
+        <span class="close-btn" onclick="closeForm('register')">&times;</span>
+        <h2>Cadastro</h2>
+        <form id="register-form" onsubmit="return register(event)">
+            <input type="text" id="register-name" placeholder="Nome" required>
+            <input type="email" id="register-email" placeholder="Email" required>
+            <input type="password" id="register-password" placeholder="Senha" required>
+            <input type="password" id="confirm-password" placeholder="Confirmar Senha" required>
+            <button type="submit" class="button-register">Cadastrar</button>
+           </form>
+    </div>
+</div>
+<script src="imoveis.js" defer></script>
+<script src="script.js"></script>
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 15px;
-    position: relative;
-    transition: color 0.3s ease;
-}
+<script>
+    // Lista de usuários (pode ser inicializada com um usuário admin)
+    const users = [
+        { name: 'Admin', email: 'admin@example.com', password: 'admin123' }
+    ];
 
-nav ul li a::before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: -5px;
-    left: 0;
-    background-color: #f1c40f; /* Cor da linha (amarelo) */
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-}
+    // Função para login
+    function login(event) {
+        event.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
 
-nav ul li a:hover::before, nav ul li a.active::before {
-    visibility: visible;
-    width: 100%;
-}
+        const user = users.find(user => user.email === email && user.password === password);
+        if (!user) {
+            alert('Email ou senha incorretos!');
+            return false;
+        }
 
-nav ul li a.active {
-    color: #f1c40f; /* Cor do texto para o link ativo (amarelo) */
-}
-nav {
-    display: flex;
-    align-items: center;
-}
-
-#nav-list {
-    list-style: none;
-    display: flex;
-    align-items: center;
-}
-
-nav ul li {
-    margin-right: 20px;
-    position: relative;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 15px;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-nav ul li a::before {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 3px;
-    bottom: -5px;
-    left: 0;
-    background-color: #f1c40f;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-}
-
-nav ul li a:hover::before, nav ul li a.active::before {
-    visibility: visible;
-    width: 100%;
-}
-
-nav ul li a.active {
-    color: #f1c40f;
-}
-
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 3px 0;
-    transition: 0.4s;
-}
-
-
-.section{
-    display: none;
-}
-.section.active{
-    margin-top: 5%;
-    display: block;
-}
-.content-section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-}
-.content-section h2 {
-    color: #56205e;
-    margin-bottom: 10px;
-}
-.content-section p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-.team-member {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.team-member img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-.team-member-info h3 {
-    color: #56205e;
-    margin-bottom: 10px;
-}
-
-.content-section {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    border-radius: 8px;
-}
-.content-section h2 {
-    color: #56205e;
-    margin-bottom: 10px;
-}
-.content-section p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-.contact-form {
-    display: grid;
-    gap: 15px;
-}
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.contact-form button {
-    background-color: #f1c40f;
-    color: #56205e;
-    border: none;
-    padding: 20px 30px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-.contact-form button:hover {
-    background-color: #d4a10c;
-}
-.contact-info {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid #ddd;
-}
-main {
-    padding: 20px;
-}
-
-#content {
-    margin-top: 20px;
-}
-/* Estilo para o menu do usuário */
-.user-menu {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.avatar {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-}
-
-.avatar img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #f1c40f;
-    padding: 3px;
-    background-color: white;
-}
-
-#dropdown-arrow {
-    margin-left: 10px;
-    transition: transform 0.3s ease;
-}
-
-.arrow-down {
-    border: solid black;
-    border-width: 0 2px 2px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(45deg);
-    margin-left: 5px;
-}
-
-.arrow-up {
-    transform: rotate(-135deg);
-}
-
-.dropdown {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    z-index: 100;
-    width: 200px;
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.dropdown::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid white;
-    z-index: 1;
-}
-
-.dropdown ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.dropdown ul li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-}
-
-.dropdown ul li img {
-    width: 24px; /* Tamanho dos ícones */
-    height: 24px;
-    margin-right: 10px;
-    border: none; /* Sem borda */
-    border-radius: 0; /* Garantir que os ícones NÃO sejam redondos */
-}
-
-.dropdown ul li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-}
-
-.dropdown ul li a:hover {
-    background-color: #f1f1f1;
-    padding: 10px;
-}
-
-.avatar.active .dropdown {
-    display: block;
-}
-
-.avatar.active #dropdown-arrow {
-    transform: rotate(-135deg); /* Altera a direção da seta */
-}
-
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        align-items: flex-start;
+        alert('Login bem-sucedido!');
+        showUserMenu(user.name);
+        closeForm('login');
+        return false;
     }
 
-    nav ul li {
-        margin-bottom: 10px;
-    }
- 
-}
-.imovel-block {
-    width: 300px;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 15px;
-    border-radius: 5px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
+    // Função para cadastro
+    function register(event) {
+        event.preventDefault();
+        const name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
 
-.imovel-block:hover {
-    transform: scale(1.05); /* Zoom effect on hover */
-}
+        if (password !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return false;
+        }
 
-.imovel-image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-}
+        // Verificar se o usuário já existe
+        const userExists = users.find(user => user.email === email);
+        if (userExists) {
+            alert('Este email já está cadastrado!');
+            return false;
+        }
 
-.imovel-info {
-    padding: 15px;
-    background-color: #fff;
-}
-
-.imovel-info h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.imovel-info p {
-    margin: 5px 0;
-}
-
-.imovel-info .disponível {
-    color: green;
-}
-
-.imovel-info .indisponível {
-    color: red;
-}
-
-.imovel-info .reservado {
-    color: orange;
-}.search-section {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-}
-
-.search-filter {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.search-container {
-    flex-grow: 1;
-    position: relative;
-}
-
-.search-container input {
-    width: 100%;
-    padding: 0.75rem 1rem 0.75rem 3rem;
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-}
-
-.search-container i {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #9e9e9e;
-}
-
-select {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-}
-
-/* Property Grid */
-.property-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.property-card {
-    background-color: white;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-.property-card:hover {
-    transform: translateY(-5px);
-}
-
-.property-image {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.favorite-btn {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    background-color: white;
-    border-radius: 50%;
-    padding: 0.75rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.3s ease;
-}
-
-.favorite-btn:hover {
-    background-color: #fbc02d;
-}
-
-.property-details {
-    padding: 1.5rem;
-}
-
-.property-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    margin-bottom: 0.75rem;
-}
-
-.property-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.property-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-.property-actions .btn {
-    flex-grow: 1;
-}
-
-
-/* CTA Section */
-.cta-section {
-    background-color: #4a148c;
-    color: white;
-    text-align: center;
-    padding: 3rem;
-    border-radius: 0.75rem;
-    margin-top: 3rem;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 2rem 0;
-}
-footer {
-    display: block;
-    unicode-bidi: isolate;
-}
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    padding: 0 1rem;
-}
-
-.footer-section h4 {
-    margin-bottom: 1rem;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid #555;
-    margin-top: 2rem;
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    overflow: auto;
-}
-
-.modal-content {
-    background-color: white;
-    margin: 10% auto;
-    padding: 2rem;
-    border-radius: 0.75rem;
-    width: 80%;
-    max-width: 600px;
-}
-
-.close {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: #333;
-}
-.admin-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    margin-right: 0.5rem;
-}
-
-.testimonial span {
-    font-style: italic;
-    display: block;
-    margin-top: 5px;
-    color: #666;
-}
-.team-container {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-}
-
-footer {
-    background-color: #56205e;
-    color: white;
-    padding: 40px 0;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
-}
-.footer-section h3 {
-    margin-bottom: 15px;
-    font-size: 18px;
-    color: #f1c40f;
-}
-
-.footer-section ul li a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-a:-webkit-any-link {
- 
-    cursor: pointer;
-
-}
-.footer-section ul li {
-    margin-bottom: 10px;
-}
-li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-    unicode-bidi: isolate;
-}
-
-.footer-section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-
-.footer-section h4 {
-    margin-bottom: 1rem;
-}
-
-
-.auth-buttons {
-    display: flex;
-    align-items: center;
-}
-
-.button-login, .button-cadastro {
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    margin-left: 10px;
-}
-
-.button-login {
-    background-color: #f1c40f;
-    color: #56205e;
-}s
-
-.button-cadastro {
-    background-color: #0f1970;
-    color: #3d0892;
-}
-
-.button-login:hover, .button-cadastro:hover {
-    background-color: #d4a10c;
-}
-
-/* Responsive styles */
-@media screen and (max-width: 1024px) {
-    header {
-        padding: 15px;
+        // Adicionar novo usuário
+        users.push({ name, email, password });
+        alert('Cadastro bem-sucedido! Agora você pode fazer login.');
+        closeForm('register');
+        showForm('login');
+        return false;
     }
 
-    nav ul li {
-        margin-right: 15px;
+    // Função para exibir o menu do usuário autenticado
+    function showUserMenu(userName) {
+        document.getElementById('auth-buttons').style.display = 'none';
+        document.getElementById('user-menu').style.display = 'block';
+        document.getElementById('user-avatar').title = userName; // Exibe o nome do usuário no avatar
     }
 
-    nav ul li a {
-        font-size: 14px;
-        padding: 8px 12px;
+    // Função de logout
+    function logout() {
+        document.getElementById('auth-buttons').style.display = 'block';
+        document.getElementById('user-menu').style.display = 'none';
+        alert('Logout realizado com sucesso!');
     }
 
-    .button-login, .button-cadastro {
-        font-size: 14px;
-        padding: 8px 12px;
+
+      // Função para exibir o menu do usuário autenticado
+// Função para exibir o menu do usuário autenticado
+function showUserMenu(userName) {
+    document.getElementById('auth-buttons').style.display = 'none';
+    document.getElementById('user-menu').style.display = 'block';
+    document.getElementById('user-avatar').title = userName;
+
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    // Limpa o menu atual antes de adicionar os itens novamente
+    dropdownMenu.innerHTML = '';
+
+    // Verifica se é o admin e adiciona o link de administrador do sistema
+    if (userName === 'Admin') {
+        const adminItem = document.createElement('li');
+        adminItem.innerHTML = '<a href="admin.html">Administrador do sistema</a>';
+        dropdownMenu.appendChild(adminItem); // Adiciona no início do menu
+    }
+
+    // Adiciona a opção "Gerenciar Imóveis" para todos os usuários logados
+    const manageItem = document.getElementById('manageImoveisItem');
+    manageItem.style.display = 'block'; // Mostra a opção quando o usuário está logado
+
+    // Adiciona o botão de logout
+    const logoutItem = document.createElement('li');
+    logoutItem.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
+    dropdownMenu.appendChild(logoutItem);
+}
+
+// Função de logout
+function logout() {
+    document.getElementById('auth-buttons').style.display = 'block';
+    document.getElementById('user-menu').style.display = 'none';
+    alert('Logout realizado com sucesso!');
+}
+
+
+
+
+    // Função para abrir os formulários de login/cadastro
+    function showForm(formType) {
+        document.getElementById(formType + '-overlay').style.display = 'block';
+    }
+
+    // Função para fechar os formulários de login/cadastro
+    function closeForm(formType) {
+        document.getElementById(formType + '-overlay').style.display = 'none';
+    }
+
+    // Função para verificar se o usuário está logado
+function isUserLoggedIn() {
+    return localStorage.getItem('loggedIn') === 'true';
+}
+
+// Função para mostrar ou esconder o item "Gerenciar Imóveis"
+function toggleManagePropertiesOption() {
+    const manageItem = document.getElementById('manageImoveisItem');
+    if (isUserLoggedIn()) {
+        manageItem.style.display = 'block'; // Mostra a opção se o usuário estiver logado
+        // Chama a função ao carregar a página
+window.onload = function() {
+    toggleManagePropertiesOption(); // Atualiza a visibilidade do item "Gerenciar Imóveis"
+};
+    } else {
+        manageItem.style.display = 'none'; // Esconde a opção se não estiver logado
     }
 }
 
-@media screen and (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .menu-toggle {
-        display: flex;
-        align-self: flex-end;
-        margin-top: -30px;
-    }
-
-    #nav-list {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        align-items: flex-start;
-    }
-
-    #nav-list.active {
-        display: flex;
-    }
-
-    nav ul li {
-        margin-right: 0;
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    .submenu {
-        position: static;
-        display: none;
-        box-shadow: none;
-        border: none;
-        padding-left: 20px;
-    }
-
-    .dropdown-menu:hover > .submenu {
-        display: none;
-    }
-
-    .dropdown-menu.active > .submenu {
-        display: block;
-    }
-
-    .auth-buttons {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        margin-top: 15px;
-    }
-
-    .button-login, .button-cadastro {
-        margin-left: 280px;
-        flex: 1;
-        text-align: center;
-    }
-
-    .button-login {
-        margin-right: 0px;
-    }
-
-    .button-cadastro {
-        margin-left: 15px;
-    }
-}
-/* Botões de autenticação */
-.auth-buttons a, .user-menu a {
-    color: white;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-/* Avatar do usuário */
-.user-menu {
-    float: right;
-}
-
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1001;
-}
-
-.form-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    z-index: 1002;
-    max-width: 300px;
-    width: 100%;
-}
-
-.form-container h2 {
-    margin-bottom: 20px;
-    color: #56205e;
-}
-
-.form-container input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #f1c40f;
-    color: #56205e;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.form-container button:hover {
-    background-color: #d4a10c;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
 
 
-/* Button Styles */
-.btn {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-}
+// Simulação de login para teste (remova ou comente esta linha em produção)
+//localStorage.setItem('loggedIn', 'true'); // Simule o login descomentando essa linha
 
-.btn-yellow {
-    background-color: #fbc02d;
-    color: #4a148c;
-}
-
-.btn-primary {
-    background-color: #4a148c;
-    color: white;
-}
-
-.btn:hover {
-    opacity: 0.9;
-}
-
+</script>
+</body>
+</html>

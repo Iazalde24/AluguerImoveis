@@ -45,8 +45,9 @@ const imoveis = [
 
 // Seleciona o container principal onde os imóveis serão adicionados
 const container = document.getElementById('imoveis-container');
-
+const container2 = document.getElementById('imoveis-destaques-container');
 // Adiciona cada imóvel ao container
 imoveis.forEach(imovel => {
     container.appendChild(imovel.render());
+    container2.appendChild(imovel.render());
 });
