@@ -3,107 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imobiliaria de Pemba - Página Inicial</title>
+    <title>Menu com Animação - Imóveis Moz</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <div class="logo">
-            <h1>Imobiliaria de Pemba</h1>
+            <h1>Imóveis Moz</h1>
         </div>
+    
         <nav>
-            <div class="menu-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-            <ul id="nav-list">
-                <li><a href="/" class="active">Início</a></li>
-                <li class="dropdown-menu">
-                    <a href="#">Categorias</a>
-                    <ul class="submenu">
-                        <li class="dropdown-menu">
-                            <a href="#">Estado do Imóvel</a>
-                            <ul class="submenu">
-                                <li><a href="#">Disponível</a></li>
-                                <li><a href="#">Indisponível</a></li>
-                                <li><a href="#">Reservado</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-menu">
-                            <a href="#">Tipo de imóvel</a>
-                            <ul class="submenu">
-                                <li><a href="#">Apartamento</a></li>
-                                <li><a href="#">Casa</a></li>
-                                <li><a href="#">Terreno</a></li>
-                                <li><a href="#">Lojas</a></li>
-                                <li><a href="#">Escritórios</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-menu">
-                            <a href="#">Imóvel por Localização</a>
-                            <ul class="submenu">
-                                <li><a href="#">Baixa-Paquite</a></li>
-                                <li><a href="#">Rua 12</a></li>
-                                <li><a href="#">Expansão</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+            <ul>
+                <li><a href="#home" class="active" onclick="showContent('home')">Início</a></li>
+                <li><a href="#imoveis" onclick="showContent('imoveis')">Todos Imóveis</a></li>
+                <li><a href="#sobre" onclick="showContent('sobre')">Sobre Nós</a></li>
+                <li><a href="#contacto" onclick="showContent('contacto')">Contacto</a></li>
+                <!-- A opção de Gerenciar Imóveis, inicialmente oculta -->
+                <li id="manageImoveisItem" style="display: none;">
+                    <a href="#gerenciar" onclick="showContent('gerenciar')">Gerenciar Imóveis</a>
                 </li>
-                <li><a href="imoveis.html">Todos Imóveis</a></li>
-                <li><a href="sobre-nos.html">Sobre Nós</a></li>
-                <li><a href="contato.html">Contato</a></li>
             </ul>
-            <div class="auth-buttons">
-                <a href="#" class="button-login" onclick="showForm('login')">Login</a>
-                <a href="#" class="button-cadastro" onclick="showForm('register')">Cadastro</a>
-            </div>
         </nav>
-    </header>
-
-    <main>
-        <section id="destaques" class="content-section">
-            <h2>Imóveis em Destaque</h2>
-            <div class="imoveis-grid">
-                <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
-                <script src="imoveis.js"></script>
+    
+        <!-- Botões de autenticação -->
+        <div class="auth-buttons" id="auth-buttons">
+            <a href="#" class="button-login" onclick="showForm('login')">Login</a>
+            <a href="#" class="button-cadastro" onclick="showForm('register')">Cadastro</a>
+        </div>
+    
+        <!-- Avatar do usuário (escondido por padrão) -->
+        <div class="user-menu" id="user-menu" style="display: none;">
+            <div class="avatar" id="user-avatar">
+                <img src="avatar.png" alt="Avatar" id="avatar-img">
+                <span id="dropdown-arrow" class="arrow-down"></span>
+                <div class="dropdown" id="user-dropdown">
+                    <ul id="dropdown-menu">
+                        <!-- O link de administrador será inserido aqui via JavaScript se o usuário for admin -->
+                        <li><a href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </div>
             </div>
-            
+        </div>
+    
+        <script src="script.js"></script>
+    </header>
+    
+    <main>
+        <section id="home" class="section active">
+        <section class="search-section">
+            <h3>Buscar Imóveis</h3>
+            <div class="search-filter">
+                <div class="search-container">
+                    <i data-feather="search"></i>
+                    <input type="text" id="searchInput" placeholder="Pesquisar imóveis...">
+                </div>
+                <select id="propertyType">
+                    <option value="">Tipo de Imóvel</option>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="terreno">Terreno</option>
+                </select>
+                <select id="location">
+                    <option value="">Localização</option>
+                    <option value="centro">Centro</option>
+                    <option value="wimbe">Wimbe</option>
+                    <option value="chuiba">Chuiba</option>
+                </select>
+                <button id="searchBtn" class="btn btn-primary">Buscar</button>
+            </div>
+        </section>
+        
+       
+        <section >
+            <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
+
+        </section>
+        </section>
+
+        <section id="imoveis" class="section">
+       
+<div id="destaques" class="content-section">
+            <h2>Todos Imoveis</h2>
+     
+                <div id="imoveis-destaques-container" style="display: flex; flex-wrap: wrap;"></div>
+          </div>
+
+        </section>
+
+        <section id="sobre" class="section">
+            <div class="content-section">
+                <h2>Sobre Nós</h2>
+                <p>A Imobiliária de Pemba é líder no mercado imobiliário em Pemba, oferecendo soluções personalizadas para compra, venda e aluguel de imóveis desde 2010. Nossa missão é fornecer experiências especializadas, unindo profundo conhecimento local com as mais avançadas tecnologias do setor.</p>
+                <p>Com uma equipe altamente comprometida e dedicada, nos orgulhamos de oferecer um serviço personalizado, pautado pela excelência e integridade. Somos a escolha ideal para quem deseja transformar os seus sonhos imobiliários em realidade em Pemba.</p>
+                <p>Seja você um comprador de primeira viagem, um investidor experiente ou alguém que procura o perfeito, a Imobiliária de Pemba está ao seu lado em cada etapa. Descubra por que somos uma referência em imóveis na cidade de Pemba.</p>
+                
+                <h3>Nossa Equipe</h3>
+                <div class="team-container">
+                    <div class="team-member">
+                        <img src="avatar.png" alt="Dom Edilson" class="team-image">
+                        <div class="team-member-info">
+                            <h4>Dom Edilson</h4>
+                            <p>Diretor Executivo</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="avatar.png" alt="MrYaza" class="team-image">
+                        <div class="team-member-info">
+                            <h4>MrYaza</h4>
+                            <p>Gerente de Vendas</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <img src="avatar.png" alt="Dr. Tony" class="team-image">
+                        <div class="team-member-info">
+                            <h4>Dr. Tony</h4>
+                            <p>Promotor</p>
+                        </div>
+                    </div>
+                </div>
+    
+                <h3>Testemunhos de Clientes</h3>
+                <div class="testimonials">
+                    <div class="testimonial">
+                        <p>"A Imobiliária de Pemba me ajudou a encontrar o apartamento perfeito! Serviço excepcional!"</p>
+                        <span>- Maria Antonio</span>
+                    </div>
+                    <div class="testimonial">
+                        <p>"Recomendo a todos! Profissionais competentes e atendimento diferenciado."</p>
+                        <span>- Juma Amisse</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="section">
+            <div id="contato" class="content-section">
+                <h2>Entre em Contato</h2>
+                <p>Estamos aqui para ajudá-lo a transformar seus sonhos em realidade! Se tiver alguma dúvida, sugestão ou precisar de mais informações sobre nossos serviços, não hesite em nos contatar. Utilize o formulário abaixo e nossa equipe responderá rapidamente para garantir que você tenha a melhor experiência possível. Na Imobiliaria de Pemba, a sua satisfação é a nossa prioridade!</p>
+                
+                <form class="contact-form" method="POST" action="enviar_contato.php">
+                    <input type="text" name="nome" placeholder="Seu Nome" required>
+                    <input type="email" name="email" placeholder="Seu E-mail" required>
+                    <input type="tel" name="telefone" placeholder="Seu Telefone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+                    <textarea name="mensagem" placeholder="Sua Mensagem" rows="5" required></textarea>
+                    <button type="submit">Enviar Mensagem</button>
+                </form>
+    
+            </div>
         </section>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Imobiliaria de Pemba. Todos os direitos reservados.</p>
-    </footer>
-
-    <!-- Login  -->
-    <div id="login-overlay" class="overlay">
-        <div class="form-container">
-            <span class="close-btn" onclick="closeForm('login')">&times;</span>
-            <h2>Login</h2>
-            <form id="login-form">
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Senha" required>
-                <button type="submit">Entrar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Cadastro -->
-    <div id="register-overlay" class="overlay">
-        <div class="form-container">
-            <span class="close-btn" onclick="closeForm('register')">&times;</span>
-            <h2>Cadastro</h2>
-            <form id="register-form">
-                <input type="text" placeholder="Nome" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Senha" required>
-                <input type="password" placeholder="Confirmar Senha" required>
-                <button type="submit">Cadastrar</button>
-            </form>
-        </div>
-    </div>
-
+    <script src="imoveis.js" defer></script>
     <script src="script.js"></script>
+
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#">Início</a></li>
+                    <li><a href="#">Imóveis</a></li>
+                    <li><a href="#">Sobre Nós</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contato</h3>
+                <ul>
+                    <li>Telefone: (123) 456-7890</li>
+                    <li>Email: info@imobiliariaxyz.com</li>
+                    <li>Endereço: Av. Principal, 123 - Cidade</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Redes Sociais</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Imobiliária XYZ. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+ <!-- Formulário de Login -->
+ <div id="login-overlay" class="overlay">
+    <div class="form-container">
+        <span class="close-btn" onclick="closeForm('login')">&times;</span>
+        <h2>Login</h2>
+        <form id="login-form" onsubmit="return login(event)">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Senha" required>
+            <button type="submit" class="button-login">Entrar</button>
+            <p class="form-footer">Não tem uma conta? <a href="#" onclick="showForm('register')">Cadastre-se</a></p>
+        </form>
+    </div>
+</div>
+
+<!-- Formulário de Cadastro -->
+<div id="register-overlay" class="overlay">
+    <div class="form-container">
+        <span class="close-btn" onclick="closeForm('register')">&times;</span>
+        <h2>Cadastro</h2>
+        <form id="register-form" onsubmit="return register(event)">
+            <input type="text" id="register-name" placeholder="Nome" required>
+            <input type="email" id="register-email" placeholder="Email" required>
+            <input type="password" id="register-password" placeholder="Senha" required>
+            <input type="password" id="confirm-password" placeholder="Confirmar Senha" required>
+            <button type="submit" class="button-register">Cadastrar</button>
+           </form>
+    </div>
+</div>
+<script src="imoveis.js" defer></script>
+<script src="script.js"></script>
+
+<script>
+    // Lista de usuários (pode ser inicializada com um usuário admin)
+    const users = [
+        { name: 'Admin', email: 'admin@example.com', password: 'admin123' }
+    ];
+
+    // Função para login
+    function login(event) {
+        event.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        const user = users.find(user => user.email === email && user.password === password);
+        if (!user) {
+            alert('Email ou senha incorretos!');
+            return false;
+        }
+
+        alert('Login bem-sucedido!');
+        showUserMenu(user.name);
+        closeForm('login');
+        return false;
+    }
+
+    // Função para cadastro
+    function register(event) {
+        event.preventDefault();
+        const name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert('As senhas não coincidem!');
+            return false;
+        }
+
+        // Verificar se o usuário já existe
+        const userExists = users.find(user => user.email === email);
+        if (userExists) {
+            alert('Este email já está cadastrado!');
+            return false;
+        }
+
+        // Adicionar novo usuário
+        users.push({ name, email, password });
+        alert('Cadastro bem-sucedido! Agora você pode fazer login.');
+        closeForm('register');
+        showForm('login');
+        return false;
+    }
+
+    // Função para exibir o menu do usuário autenticado
+    function showUserMenu(userName) {
+        document.getElementById('auth-buttons').style.display = 'none';
+        document.getElementById('user-menu').style.display = 'block';
+        document.getElementById('user-avatar').title = userName; // Exibe o nome do usuário no avatar
+    }
+
+    // Função de logout
+    function logout() {
+        document.getElementById('auth-buttons').style.display = 'block';
+        document.getElementById('user-menu').style.display = 'none';
+        alert('Logout realizado com sucesso!');
+    }
+
+
+      // Função para exibir o menu do usuário autenticado
+// Função para exibir o menu do usuário autenticado
+function showUserMenu(userName) {
+    document.getElementById('auth-buttons').style.display = 'none';
+    document.getElementById('user-menu').style.display = 'block';
+    document.getElementById('user-avatar').title = userName;
+
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    // Limpa o menu atual antes de adicionar os itens novamente
+    dropdownMenu.innerHTML = '';
+
+    // Verifica se é o admin e adiciona o link de administrador do sistema
+    if (userName === 'Admin') {
+        const adminItem = document.createElement('li');
+        adminItem.innerHTML = '<a href="admin.html">Administrador do sistema</a>';
+        dropdownMenu.appendChild(adminItem); // Adiciona no início do menu
+    }
+
+    // Adiciona a opção "Gerenciar Imóveis" para todos os usuários logados
+    const manageItem = document.getElementById('manageImoveisItem');
+    manageItem.style.display = 'block'; // Mostra a opção quando o usuário está logado
+
+    // Adiciona o botão de logout
+    const logoutItem = document.createElement('li');
+    logoutItem.innerHTML = '<a href="#" onclick="logout()">Logout</a>';
+    dropdownMenu.appendChild(logoutItem);
+}
+
+// Função de logout
+function logout() {
+    document.getElementById('auth-buttons').style.display = 'block';
+    document.getElementById('user-menu').style.display = 'none';
+    alert('Logout realizado com sucesso!');
+}
+
+
+
+
+    // Função para abrir os formulários de login/cadastro
+    function showForm(formType) {
+        document.getElementById(formType + '-overlay').style.display = 'block';
+    }
+
+    // Função para fechar os formulários de login/cadastro
+    function closeForm(formType) {
+        document.getElementById(formType + '-overlay').style.display = 'none';
+    }
+
+    // Função para verificar se o usuário está logado
+function isUserLoggedIn() {
+    return localStorage.getItem('loggedIn') === 'true';
+}
+
+// Função para mostrar ou esconder o item "Gerenciar Imóveis"
+function toggleManagePropertiesOption() {
+    const manageItem = document.getElementById('manageImoveisItem');
+    if (isUserLoggedIn()) {
+        manageItem.style.display = 'block'; // Mostra a opção se o usuário estiver logado
+        // Chama a função ao carregar a página
+window.onload = function() {
+    toggleManagePropertiesOption(); // Atualiza a visibilidade do item "Gerenciar Imóveis"
+};
+    } else {
+        manageItem.style.display = 'none'; // Esconde a opção se não estiver logado
+    }
+}
+
+
+
+// Simulação de login para teste (remova ou comente esta linha em produção)
+//localStorage.setItem('loggedIn', 'true'); // Simule o login descomentando essa linha
+
+</script>
 </body>
 </html>

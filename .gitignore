@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+/edilsonpedroclaudinoLab4/nbproject/private/
+/EdilsonLab4/nbproject/private/
+/EdilsonLab4/dist/

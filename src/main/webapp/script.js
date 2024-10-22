@@ -1,4 +1,92 @@
-// Mobile menu toggle
+
+// Função que alterna a exibição das seções
+function showContent(sectionId) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none'; // Ocultar todas as seções
+    });
+
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.style.display = 'block'; // Mostrar a seção ativa
+    }
+
+    const links = document.querySelectorAll('nav ul li a');
+    links.forEach(link => {
+        link.classList.remove('active');
+    });
+
+    const activeLink = document.querySelector(`nav ul li a[href="#${sectionId}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    }
+}
+
+// Chama a função quando a página carrega
+window.onload = function() {
+    addManagePropertiesOption(); // Verifica e adiciona o item "Gerenciar Imóveis"
+};
+
+// Simular login
+// localStorage.setItem('loggedIn', 'true'); // Ativa o login
+// localStorage.removeItem('loggedIn'); // Remove o estado de login para simular logout
+
+function showContent(sectionId) {
+    // Esconder todas as seções
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none'; // Ocultar todas as seções
+    });
+
+    // Exibir a seção correspondente
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        targetSection.style.display = 'block'; // Mostrar a seção ativa
+    } else {
+        console.error(`Seção com ID "${sectionId}" não encontrada.`);
+    }
+
+    // Gerenciar o estado do menu ativo
+    const links = document.querySelectorAll('nav ul li a');
+    links.forEach(link => {
+        link.classList.remove('active');
+    });
+
+    const activeLink = document.querySelector(`nav ul li a[href="#${sectionId}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    } else {
+        console.error(`Link com href="#${sectionId}" não encontrado no menu.`);
+    }
+}
+// Função para alternar o dropdown do avatar
+document.getElementById('user-avatar').addEventListener('click', function(event) {
+    event.stopPropagation();  // Impede o clique de propagar para outros elementos
+    this.classList.toggle('active'); // Ativa/desativa o dropdown
+
+    const arrow = document.getElementById('dropdown-arrow');
+    if (this.classList.contains('active')) {
+        arrow.classList.remove('arrow-down');
+        arrow.classList.add('arrow-up');
+    } else {
+        arrow.classList.remove('arrow-up');
+        arrow.classList.add('arrow-down');
+    }
+});
+
+// Ocultar o dropdown se clicar fora dele
+window.addEventListener('click', function() {
+    const avatar = document.getElementById('user-avatar');
+    avatar.classList.remove('active');
+
+    const arrow = document.getElementById('dropdown-arrow');
+    arrow.classList.remove('arrow-up');
+    arrow.classList.add('arrow-down');
+});
 const mobileMenu = document.getElementById('mobile-menu');
 const navList = document.getElementById('nav-list');
 
@@ -6,69 +94,3 @@ mobileMenu.addEventListener('click', () => {
     navList.classList.toggle('active');
     mobileMenu.classList.toggle('active');
 });
-
-// Dropdown functionality for mobile
-const dropdownMenus = document.querySelectorAll('.dropdown-menu');
-
-dropdownMenus.forEach(menu => {
-    menu.addEventListener('click', (e) => {
-        if (window.innerWidth <= 768) {
-            e.preventDefault();
-            menu.classList.toggle('active');
-        }
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navList.contains(e.target) && !mobileMenu.contains(e.target)) {
-        navList.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        dropdownMenus.forEach(menu => menu.classList.remove('active'));
-    }
-});
-
-// Show content function
-function showContent(contentId) {
-    const content = document.getElementById('content');
-    switch (contentId) {
-        case 'home':
-            content.innerHTML = '<h2>Bem-vindo à Imobiliaria de Pemba</h2><p>Explore os melhores imóveis de Pemba.</p>';
-            break;
-        case 'imoveis':
-            content.innerHTML = '<h2>Todos os Imóveis</h2><p>Aqui estão todos os imóveis disponíveis.</p>';
-            break;
-        case 'sobre':
-            content.innerHTML = '<h2>Sobre Nós</h2><p>Somos uma imobiliária especializada em Pemba.</p>';
-            break;
-        case 'contacto':
-            content.innerHTML = '<h2>Contato</h2><p>Entre em contato conosco pelo telefone: +258 84 123 4567</p>';
-            break;
-    }
-}
-
-// Show login/register form
-function showForm(formType) {
-    document.getElementById(`${formType}-overlay`).style.display = 'block';
-}
-
-// Close login/register form
-function closeForm(formType) {
-    document.getElementById(`${formType}-overlay`).style.display = 'none';
-}
-
-// Handle form submissions (implement proper form handling in a real application)
-document.getElementById('login-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    console.log('Login submitted');
-    closeForm('login');
-});
-
-document.getElementById('register-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    console.log('Registration submitted');
-    closeForm('register');
-});
-
-// Initialize the page with home content
-showContent('home');
