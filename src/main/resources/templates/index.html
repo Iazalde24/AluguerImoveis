@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu com Animação - Imóveis Moz</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="proprietario.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -50,7 +53,7 @@
     
     <main>
         <section id="home" class="section active">
-        <section class="search-section">
+        <div class="search-section">
             <h3>Buscar Imóveis</h3>
             <div class="search-filter">
                 <div class="search-container">
@@ -71,13 +74,13 @@
                 </select>
                 <button id="searchBtn" class="btn btn-primary">Buscar</button>
             </div>
-        </section>
+        </div>
         
        
-        <section >
+       <div>
             <div id="imoveis-container" style="display: flex; flex-wrap: wrap;"></div>
-
-        </section>
+</div>
+        
         </section>
 
         <section id="imoveis" class="section">
@@ -151,8 +154,127 @@
     
             </div>
         </section>
+        <section id="gerenciar" class="section">
+            <div class="proprietario-main">
+            <aside class="sidebar">
+                <ul>
+                    <li><a href="#" class="active" data-section="dashboard">
+                        <i data-feather="home"></i> Dashboard</a></li>
+                    <li><a href="#" data-section="meus-imoveis">
+                        <i data-feather="list"></i> Meus Imóveis</a></li>
+                    <li><a href="#" data-section="adicionar-imovel">
+                        <i data-feather="plus-circle"></i> Adicionar Imóvel</a></li>
+                    <li><a href="#" data-section="mensagens">
+                        <i data-feather="message-square"></i> Mensagens</a></li>
+                    <li><a href="#" data-section="perfil">
+                        <i data-feather="user"></i> Perfil</a></li>
+                </ul>
+            </aside>
+    
+            <div class="content">
+                <section id="dashboard" class="active-section">
+                    <h2>Dashboard</h2>
+                    <div class="dashboard-cards">
+                        <div class="card">
+                            <h3>Total de Imóveis</h3>
+                            <p class="card-value">5</p>
+                        </div>
+                        <div class="card">
+                            <h3>Visualizações</h3>
+                            <p class="card-value">152</p>
+                        </div>
+                        <div class="card">
+                            <h3>Mensagens</h3>
+                            <p class="card-value">3</p>
+                        </div>
+                    </div>
+                </section>
+    
+                <section id="meus-imoveis" class="hidden-section">
+                    <h2>Meus Imóveis</h2>
+                    <table id="imoveis-table">
+                        <thead>
+                            <tr>
+                                <th>Título</th>
+                                <th>Tipo</th>
+                                <th>Localização</th>
+                                <th>Preço</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Será preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </section>
+    
+                <section id="adicionar-imovel" class="hidden-section">
+                    <h2>Adicionar Novo Imóvel</h2>
+                    <form id="add-imovel-form">
+                        <div class="form-group">
+                            <label for="titulo">Título</label>
+                            <input type="text" id="titulo" name="titulo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="casa">Casa</option>
+                                <option value="apartamento">Apartamento</option>
+                                <option value="terreno">Terreno</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="localizacao">Localização</label>
+                            <input type="text" id="localizacao" name="localizacao" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="preco">Preço (MZN)</label>
+                            <input type="number" id="preco" name="preco" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+                            <textarea id="descricao" name="descricao" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto do Imóvel</label>
+                            <input type="file" id="imgUrl" name="imgUrl" accept="/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Adicionar Imóvel</button>
+                    </form>
+                </section>
+    
+                <section id="mensagens" class="hidden-section">
+                    <h2>Mensagens</h2>
+                    <div id="mensagens-list">
+                        <!-- Será preenchido via JavaScript -->
+                    </div>
+                </section>
+    
+                <section id="perfil" class="hidden-section">
+                    <h2>Meu Perfil</h2>
+                    <form id="perfil-form">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="tel" id="telefone" name="telefone" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Atualizar Perfil</button>
+                    </form>
+                </section>
+            </div>
+            </div>
+        </section>
     </main>
-    <script src="imoveis.js" defer></script>
+  
     <script src="script.js"></script>
 
     
@@ -218,6 +340,11 @@
 </div>
 <script src="imoveis.js" defer></script>
 <script src="script.js"></script>
+
+<script>
+    feather.replace();
+</script>
+<script src="proprietario.js"></script>
 
 <script>
     // Lista de usuários (pode ser inicializada com um usuário admin)
@@ -319,7 +446,17 @@ function showUserMenu(userName) {
 function logout() {
     document.getElementById('auth-buttons').style.display = 'block';
     document.getElementById('user-menu').style.display = 'none';
+    localStorage.setItem('loggedIn', 'false');
+      // Esconder a opção "Gerenciar Imóveis" ao fazer logout
+      const manageItem = document.getElementById('manageImoveisItem');
+    manageItem.style.display = 'none';
     alert('Logout realizado com sucesso!');
+
+      // Redirecionar para a seção "Início"
+      window.location.hash = 'index.html';
+
+// Recarregar a página para garantir o reset completo do estado
+window.location.reload();
 }
 
 

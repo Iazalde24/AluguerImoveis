@@ -10,7 +10,6 @@ class Imovel {
         this.imgUrl = imgUrl;
     }
 
-    // Método para renderizar o imóvel como um bloco (container)
     render() {
         let block = document.createElement('div');
         block.className = 'imovel-block';
@@ -29,24 +28,22 @@ class Imovel {
         `;
 
         block.addEventListener('click', () => {
-            window.location.href = `detalhes.html?titulo=${this.titulo}`; // Redireciona para página de detalhes
+            window.location.href = `detalhes.html?titulo=${this.titulo}`;
         });
 
         return block;
     }
 }
 
-// Lista de imóveis com imagens
 const imoveis = [
     new Imovel('Moradia T3 na Julius Nyerere', 'Moradia', 'Av. Julius Nyerere', '18,000', 'Disponível', 'Renda', '843567890', 'i3.jpeg'),
     new Imovel('Apartamento T1 Sommershield', 'Apartamento', 'Sommershield', '95,000', 'Reservado', 'Renda', '843567890', 'i2.jpg'),
     new Imovel('Escritório mobiliado', 'Escritório', 'Sommershield I', '110,000', 'Indisponível', 'Venda', '843567890', 'i.png'),
 ];
 
-// Seleciona o container principal onde os imóveis serão adicionados
 const container = document.getElementById('imoveis-container');
 const container2 = document.getElementById('imoveis-destaques-container');
-// Adiciona cada imóvel ao container
+
 imoveis.forEach(imovel => {
     container.appendChild(imovel.render());
     container2.appendChild(imovel.render());
