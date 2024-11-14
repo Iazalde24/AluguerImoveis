@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-11-14T09:48:24")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-11-14T15:38:51")
 @StaticMetamodel(Imovel.class)
 public class Imovel_ { 
 

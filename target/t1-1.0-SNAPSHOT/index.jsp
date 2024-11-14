@@ -3,11 +3,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%
-    HttpSession session1 = request.getSession();
-    String usuarioNome = (String) session1.getAttribute("usuarioNome");
-    boolean isUserLoggedIn = usuarioNome != null;
-%>
+
 
 <!DOCTYPE html>
 <html lang="pt">
@@ -18,65 +14,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
+    <header><%@ include file="header.jsp" %></header>
 <!-- Cabeçalho e Navegação -->
-<header>
-    <div class="logo">
-        <h1>Imóveis Moz</h1>
-    </div>
 
-    <nav>
-        <ul>
-            <li><a href="#home" class="active">Início</a></li>
-            <li><a href="#imoveis">Todos Imóveis</a></li>
-            <li><a href="#sobre">Sobre Nós</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-            <% if (isUserLoggedIn) { %>
-                <li id="manageImoveisItem" style="display:block;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
-            <% } else { %>
-                <li id="manageImoveisItem" style="display:none;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
-            <% } %>
-        </ul>
-    </nav>
-
-    <!-- Botões de autenticação -->
-    <div class="auth-buttons" id="auth-buttons" style="<%= isUserLoggedIn ? "display:none;" : "display:block;" %>">
-        <a href="#" class="button-login" onclick="showForm('login')">Login</a>
-        <a href="#" class="button-cadastro" onclick="showForm('register')">Cadastro</a>
-    </div>
-
- <!-- Menu do usuário autenticado -->
-<div class="user-menu" id="user-menu" style="<%= isUserLoggedIn ? "display:block;" : "display:none;" %>">
-    <div class="avatar" id="user-avatar">
-        <img src="avatar.png" alt="Avatar" id="avatar-img">
-        <span id="dropdown-arrow" class="arrow-down"></span>
-        <div class="dropdown" id="user-dropdown">
-            <ul id="dropdown-menu">
-                <!-- Nome do usuário (não clicável) -->
-                <li><span><img src="avatar.png" alt="Usuário Icone"> <%= usuarioNome %></span></li>
-                
-                <!-- Opção de administrador, se for um admin -->
-                <% if ("Admin".equals(usuarioNome)) { %>
-                    <li><a href="admin.html"><img src="admin-icon.png" alt="Admin Icone"> Administrador do sistema</a></li>
-                <% } %>
-                
-                <!-- Botão de logout -->
-                <li>
-                    <form action="UsuarioServlet" method="post" style="display: inline;">
-                        <input type="hidden" name="action" value="logout">
-                        <button type="submit" class="logout-link"><img src="logout-icon.png" alt="Logout Icone"> Logout</button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-</header>
 
 <!-- Seção Principal -->
 <main>
-    <!-- Seção de Busca -->
+  
     <section id="home" class="section active">
         <div class="search-section">
             <h3>Buscar Imóveis</h3>
@@ -101,7 +45,6 @@
             </div>
         </div>
 
-    <!-- Container dos Imóveis -->
     <div id="imoveis-container" style="display: flex; flex-wrap: wrap;">
         <%
             // Obtém a lista de imóveis do atributo da request
@@ -124,8 +67,8 @@
                 System.out.println("Imóveis disponíveis recebidos no JSP: " + imoveis.size());
                 for (Imovel imovel : imoveis) {
         %>
-                <div class="imovel-block">
-                    <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
+               <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
+     <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
                     <div class="imovel-info">
                         <h3><%= imovel.getDescricao() %></h3>
                         <p>Localização: <%= imovel.getLocalizacao() %></p>
@@ -142,7 +85,7 @@
     </div>
     </section>
 
-    <!-- Seção de Destaques -->
+     
     <section id="imoveis" class="section">
         <div id="destaques" class="content-section">
             <h2>Todos Imóveis</h2>
@@ -151,8 +94,8 @@
                     if (imoveis != null) {
                         for (Imovel imovel : imoveis) {
                 %>
-                    <div class="imovel-block">
-                        <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
+                  <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
+      <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
                      <div class="imovel-info">
     <h3><%= imovel.getDescricao() %></h3>
     <p>Localização: <%= imovel.getLocalizacao() %></p>
@@ -176,7 +119,7 @@
     </section>
 
     <script src="https://unpkg.com/feather-icons"></script>
-</main>
+</main>-->
 
 <!-- Formulário de Login -->
 <div id="login-overlay" class="overlay">
@@ -211,6 +154,23 @@
 
 <!-- JavaScript -->
 <script>
+    // Seleciona todos os blocos de imóveis
+// Seleciona todos os blocos de imóveis
+document.querySelectorAll('.imovel-block').forEach(item => {
+    item.addEventListener('click', () => {
+        const idImovel = item.getAttribute('data-id');
+        
+        // Realiza uma requisição para buscar os detalhes do imóvel
+        fetch(`/ImovelServlet?id=` + idImovel)
+            .then(response => response.text())
+            .then(html => {
+                // Atualiza a seção com o conteúdo dos detalhes do imóvel
+                document.querySelector('#main-content').innerHTML = html;
+            })
+            .catch(error => console.error('Erro ao carregar os detalhes do imóvel:', error));
+    });
+});
+
     // Função para exibir a seção correspondente ao link clicado
 function showSection(sectionId) {
     // Ocultar todas as seções

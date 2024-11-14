@@ -1,3 +1,5 @@
+package com.pw.servlet;
+
 import com.pw.entity.Usuario;
 import javax.persistence.*;
 import javax.servlet.ServletException;
