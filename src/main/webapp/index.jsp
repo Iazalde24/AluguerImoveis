@@ -21,6 +21,8 @@
     <title>Imóveis Moz - Início</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="proprietario.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
     <header><%@ include file="header.jsp" %></header>
@@ -151,43 +153,105 @@
                     </div>
                 </div>
             </section>
+<!-- Meus Imóveis -->
+<section id="meus-imoveis" class="hidden-section">
+    <h2>Meus Imóveis</h2>
+    <table id="imoveis-table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Tipo</th>
+                <th>Localização</th>
+                <th>Preço</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%
+                if (meusImoveis != null) {
+                    for (Imovel imovel : meusImoveis) {
+            %>
+                <tr>
+                    <td><%= imovel.getDescricao() %></td>
+                    <td><%= imovel.getTipo() %></td>
+                    <td><%= imovel.getLocalizacao() %></td>
+                    <td>MZN <%= imovel.getPreco() %></td>
+                    <td><%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %></td>
+                    <td>
+                        <!-- Botão Editar -->
+                        <button class="btn-icon edit-btn" 
+                            onclick="openEditModal(<%= imovel.getId() %>, 
+                            '<%= imovel.getDescricao() %>', 
+                            '<%= imovel.getTipo() %>', 
+                            '<%= imovel.getLocalizacao() %>', 
+                            <%= imovel.getPreco() %>)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <!-- Botão Excluir -->
+                        <button class="btn-icon delete-btn" 
+                            onclick="openDeleteModal(<%= imovel.getId() %>)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            <%
+                    }
+                } else {
+            %>
+                <tr><td colspan="6">Nenhum imóvel cadastrado.</td></tr>
+            <%
+                }
+            %>
+        </tbody>
+    </table>
 
-            <!-- Meus Imóveis -->
-            <section id="meus-imoveis" class="hidden-section">
-                <h2>Meus Imóveis</h2>
-                <table id="imoveis-table">
-                    <thead>
-                        <tr>
-                            <th>Título</th>
-                            <th>Tipo</th>
-                            <th>Localização</th>
-                            <th>Preço</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%
-                            if (meusImoveis != null) {
-                                for (Imovel imovel : meusImoveis) {
-                        %>
-                            <tr>
-                                <td><%= imovel.getDescricao() %></td>
-                                <td><%= imovel.getTipo() %></td>
-                                <td><%= imovel.getLocalizacao() %></td>
-                                <td>MZN <%= imovel.getPreco() %></td>
-                                <td><%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %></td>
-                            </tr>
-                        <%
-                                }
-                            } else {
-                        %>
-                            <tr><td colspan="5">Nenhum imóvel cadastrado.</td></tr>
-                        <%
-                            }
-                        %>
-                    </tbody>
-                </table>
-            </section>
+    <!-- Modal de Editar -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Editar Imóvel</h3>
+            <form method="post" action="GerenciarImovelServlet">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="id" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-descricao">Descrição</label>
+                    <input type="text" id="edit-descricao" name="descricao" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-tipo">Tipo</label>
+                    <select id="edit-tipo" name="tipo" required>
+                        <option value="casa">Casa</option>
+                        <option value="apartamento">Apartamento</option>
+                        <option value="terreno">Terreno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-localizacao">Localização</label>
+                    <input type="text" id="edit-localizacao" name="localizacao" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-preco">Preço (MZN)</label>
+                    <input type="number" id="edit-preco" name="preco" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Excluir -->
+    <div id="deleteModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Tem certeza que deseja excluir este imóvel?</h3>
+            <form method="post" action="GerenciarImovelServlet">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" id="delete-id">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+</section>
 
             <!-- Adicionar Novo Imóvel -->
             <section id="adicionar-imovel" class="hidden-section">
@@ -263,7 +327,38 @@
 </div>
 
 <!-- JavaScript -->
-<script>
+<script>// Função para abrir o modal de edição
+function openEditModal(id, descricao, tipo, localizacao, preco) {
+    document.getElementById("edit-id").value = id;
+    document.getElementById("edit-descricao").value = descricao;
+    document.getElementById("edit-tipo").value = tipo;
+    document.getElementById("edit-localizacao").value = localizacao;
+    document.getElementById("edit-preco").value = preco;
+
+    const editModal = document.getElementById("editModal");
+    editModal.classList.remove("hidden");
+}
+
+// Função para fechar o modal de edição
+function closeEditModal() {
+    const editModal = document.getElementById("editModal");
+    editModal.classList.add("hidden");
+}
+
+// Função para abrir o modal de exclusão
+function openDeleteModal(id) {
+    document.getElementById("delete-id").value = id;
+
+    const deleteModal = document.getElementById("deleteModal");
+    deleteModal.classList.remove("hidden");
+}
+
+// Função para fechar o modal de exclusão
+function closeDeleteModal() {
+    const deleteModal = document.getElementById("deleteModal");
+    deleteModal.classList.add("hidden");
+}
+
     document.addEventListener("DOMContentLoaded", function () {
     // Seleciona os links do menu lateral
     const sidebarLinks = document.querySelectorAll(".sidebar ul li a");

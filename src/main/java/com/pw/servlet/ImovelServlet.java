@@ -56,6 +56,7 @@ public class ImovelServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String action = request.getParameter("action");
         Long usuarioId = (Long) session.getAttribute("usuarioId");
         if (usuarioId == null) {
             response.sendRedirect("index.jsp?erro=login"); // Redireciona caso o usuário não esteja logado
@@ -94,6 +95,7 @@ public class ImovelServlet extends HttpServlet {
             em.getTransaction().commit();
 
             response.sendRedirect("ImovelServlet");
+            
         } catch (Exception e) {
             System.err.println("Erro ao salvar imóvel: " + e.getMessage());
             response.sendRedirect("index.jsp?erro=gerenciamento");
@@ -101,6 +103,8 @@ public class ImovelServlet extends HttpServlet {
             em.close();
         }
     }
+    
+    
 
     @Override
     public void destroy() {
