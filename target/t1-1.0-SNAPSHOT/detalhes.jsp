@@ -29,13 +29,13 @@
     <!-- Seção de detalhes do imóvel -->
     <main>
         <div class="container">
-            <header class="property-header">
+            <div class="property-header">
                 <h1><%= imovel.getDescricao() %></h1>
                 <p class="location">
                     <i class="fas fa-map-marker-alt"></i> 
                     <%= imovel.getLocalizacao() %>
                 </p>
-            </header>
+            </div>
 
             <section class="gallery">
                 <div class="main-image-container">
@@ -56,7 +56,8 @@
                 <div class="actions">
                     <button class="btn primary" id="map-btn">
                         <i class="fas fa-map-marker-alt"></i> 
-                        Ver no Mapa
+                        <a href="https://www.google.com/maps/search/pemba<%= imovel.getLocalizacao() %>">   Ver no Mapa
+                        </a>
                     </button>
                     <button class="btn primary" id="schedule-btn">
                         <i class="far fa-calendar-alt"></i> 

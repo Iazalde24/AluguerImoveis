@@ -65,7 +65,7 @@
         } else if (imoveis.isEmpty()) {
             System.out.println("Atributo 'imoveisDisponiveis' está vazio.");
     %>
-            <p>Atributo 'imoveisDisponiveis' está vazio.</p>
+            <p>Nenhum imovel disponivel.</p>
     <%
         } else {
             System.out.println("Imóveis disponíveis recebidos no JSP: " + imoveis.size());
