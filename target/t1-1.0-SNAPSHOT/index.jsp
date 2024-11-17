@@ -1,8 +1,16 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page import="com.pw.entity.Imovel" %>
 <%@ page import="java.util.List" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%
+    // Recupera a lista de imóveis do atributo da requisição
+    List<Imovel> meusImoveis = (List<Imovel>) request.getAttribute("meusImoveis");
+    if (meusImoveis == null) {
+        meusImoveis = new ArrayList<>(); // Previne erro de nulidade
+    }
+%>
 
 
 <!DOCTYPE html>
@@ -12,6 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imóveis Moz - Início</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="proprietario.css">
 </head>
 <body>
     <header><%@ include file="header.jsp" %></header>
@@ -44,45 +53,45 @@
                 <button id="searchBtn" class="btn btn-primary">Buscar</button>
             </div>
         </div>
+<div id="imoveis-container" style="display: flex; flex-wrap: wrap;">
+    <%
+        List<Imovel> imoveis = (List<Imovel>) request.getAttribute("imoveisDisponiveis");
 
-    <div id="imoveis-container" style="display: flex; flex-wrap: wrap;">
-        <%
-            // Obtém a lista de imóveis do atributo da request
-            List<Imovel> imoveis = (List<Imovel>) request.getAttribute("imoveisDisponiveis");
-            
-            if (imoveis == null) {
-                // Log para depuração
-                System.out.println("Atributo 'imoveisDisponiveis' não encontrado no request.");
-        %>
-                <p>Atributo 'imoveisDisponiveis' não encontrado no request.</p>
-        <%
-            } else if (imoveis.isEmpty()) {
-                // Log para depuração
-                System.out.println("Atributo 'imoveisDisponiveis' está vazio.");
-        %>
-                <p>Atributo 'imoveisDisponiveis' está vazio.</p>
-        <%
-            } else {
-                // Exibe os imóveis disponíveis
-                System.out.println("Imóveis disponíveis recebidos no JSP: " + imoveis.size());
-                for (Imovel imovel : imoveis) {
-        %>
-               <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
-     <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
-                    <div class="imovel-info">
-                        <h3><%= imovel.getDescricao() %></h3>
-                        <p>Localização: <%= imovel.getLocalizacao() %></p>
-                        <p>Preço: R$ <%= imovel.getPreco() %></p>
-                        <p class="<%= imovel.getDisponivel() ? "disponivel" : "indisponivel" %>">
-                            <%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %>
-                        </p>
-                    </div>
+        if (imoveis == null) {
+            System.out.println("Atributo 'imoveisDisponiveis' não encontrado no request.");
+    %>
+            <p>Atributo 'imoveisDisponiveis' não encontrado no request.</p>
+    <%
+        } else if (imoveis.isEmpty()) {
+            System.out.println("Atributo 'imoveisDisponiveis' está vazio.");
+    %>
+            <p>Atributo 'imoveisDisponiveis' está vazio.</p>
+    <%
+        } else {
+            System.out.println("Imóveis disponíveis recebidos no JSP: " + imoveis.size());
+            for (Imovel imovel : imoveis) {
+    %>
+            <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
+                <div class="imovel-image" 
+                     style="background-image: url('<%= request.getContextPath() %>/image?id=<%= imovel.getId() %>'); 
+                            background-size: cover; 
+                            background-position: center;">
                 </div>
-        <%
-                }
+                <div class="imovel-info">
+                    <h3><%= imovel.getDescricao() %></h3>
+                    <p>Localização: <%= imovel.getLocalizacao() %></p>
+                    <p>Preço: R$ <%= imovel.getPreco() %></p>
+                    <p class="<%= imovel.getDisponivel() ? "disponivel" : "indisponivel" %>">
+                        <%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %>
+                    </p>
+                </div>
+            </div>
+    <%
             }
-        %>
-    </div>
+        }
+    %>
+</div>
+
     </section>
 
      
@@ -94,9 +103,12 @@
                     if (imoveis != null) {
                         for (Imovel imovel : imoveis) {
                 %>
-                  <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
-      <div class="imovel-image" style="background-image: url('<%= imovel.getImagem() %>');"></div>
-                     <div class="imovel-info">
+                   <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
+                <div class="imovel-image" 
+                     style="background-image: url('<%= request.getContextPath() %>/image?id=<%= imovel.getId() %>'); 
+                            background-size: cover; 
+                            background-position: center;">
+                </div>   <div class="imovel-info">
     <h3><%= imovel.getDescricao() %></h3>
     <p>Localização: <%= imovel.getLocalizacao() %></p>
     <p>Preço: R$ <%= imovel.getPreco() %></p>
@@ -105,6 +117,7 @@
     </p>
 </div>
 
+    
                     </div>
                 <%
                         }
@@ -117,9 +130,106 @@
             </div>
         </div>
     </section>
+<section id="gerenciar" class="section hidden-section">
+    <div class="proprietario-main">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#" class="active" data-section="dashboard">Dashboard</a></li>
+                <li><a href="#" data-section="meus-imoveis">Meus Imóveis</a></li>
+                <li><a href="#" data-section="adicionar-imovel">Adicionar Imóvel</a></li>
+            </ul>
+        </aside>
+
+        <div class="content">
+            <!-- Dashboard -->
+            <section id="dashboard" class="active-section">
+                <h2>Bem-vindo, <%= usuarioNome %>!</h2>
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Total de Imóveis</h3>
+                        <p class="card-value"><%= meusImoveis != null ? meusImoveis.size() : 0 %></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Meus Imóveis -->
+            <section id="meus-imoveis" class="hidden-section">
+                <h2>Meus Imóveis</h2>
+                <table id="imoveis-table">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Tipo</th>
+                            <th>Localização</th>
+                            <th>Preço</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            if (meusImoveis != null) {
+                                for (Imovel imovel : meusImoveis) {
+                        %>
+                            <tr>
+                                <td><%= imovel.getDescricao() %></td>
+                                <td><%= imovel.getTipo() %></td>
+                                <td><%= imovel.getLocalizacao() %></td>
+                                <td>MZN <%= imovel.getPreco() %></td>
+                                <td><%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %></td>
+                            </tr>
+                        <%
+                                }
+                            } else {
+                        %>
+                            <tr><td colspan="5">Nenhum imóvel cadastrado.</td></tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Adicionar Novo Imóvel -->
+            <section id="adicionar-imovel" class="hidden-section">
+                <h2>Adicionar Novo Imóvel</h2>
+                <form id="add-imovel-form" method="post" action="ImovelServlet" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" name="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" name="tipo" required>
+                            <option value="casa">Casa</option>
+                            <option value="apartamento">Apartamento</option>
+                            <option value="terreno">Terreno</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="localizacao">Localização</label>
+                        <input type="text" id="localizacao" name="localizacao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preco">Preço (MZN)</label>
+                        <input type="number" id="preco" name="preco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagem">Foto do Imóvel</label>
+                        <input type="file" id="imagem" name="imagem" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Adicionar Imóvel</button>
+                </form>
+            </section>
+        </div>
+    </div>
+</section>
 
     <script src="https://unpkg.com/feather-icons"></script>
-</main>-->
+</main>
 
 <!-- Formulário de Login -->
 <div id="login-overlay" class="overlay">
@@ -154,6 +264,40 @@
 
 <!-- JavaScript -->
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Seleciona os links do menu lateral
+    const sidebarLinks = document.querySelectorAll(".sidebar ul li a");
+    // Seleciona as seções internas do gerenciar
+    const sections = document.querySelectorAll("#gerenciar .content section");
+
+    // Adiciona evento de clique em cada link
+    sidebarLinks.forEach(link => {
+        link.addEventListener("click", function (event) {
+            event.preventDefault(); // Previne comportamento padrão do link
+
+            // Remove a classe 'active' de todos os links
+            sidebarLinks.forEach(item => item.classList.remove("active"));
+
+            // Adiciona a classe 'active' ao link clicado
+            this.classList.add("active");
+
+            // Oculta todas as seções
+            sections.forEach(section => {
+                section.classList.remove("active-section");
+                section.classList.add("hidden-section");
+            });
+
+            // Mostra a seção correspondente ao link clicado
+            const targetSectionId = this.getAttribute("data-section");
+            const targetSection = document.getElementById(targetSectionId);
+            if (targetSection) {
+                targetSection.classList.remove("hidden-section");
+                targetSection.classList.add("active-section");
+            }
+        });
+    });
+});
+
     // Seleciona todos os blocos de imóveis
 // Seleciona todos os blocos de imóveis
 document.querySelectorAll('.imovel-block').forEach(item => {

@@ -877,3 +877,10 @@ li {
     opacity: 0.9;
 }
 
+.hidden-section {
+    display: none;
+}
+
+.active-section {
+    display: block;
+}

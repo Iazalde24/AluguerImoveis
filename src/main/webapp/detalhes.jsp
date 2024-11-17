@@ -98,9 +98,7 @@
         </div>
     </main>
 
-    <!-- Footer comum -->
-    <jsp:include page="footer.jsp" />
-
+    
     
 </body>
 </html>
