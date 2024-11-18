@@ -3,6 +3,7 @@
 <%
     HttpSession session1 = request.getSession();
     String usuarioNome = (String) session1.getAttribute("usuarioNome");
+    session1.getAttribute("usuarioEmail");
     boolean isUserLoggedIn = usuarioNome != null;
 %>
 <header>

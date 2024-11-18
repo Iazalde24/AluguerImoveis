@@ -258,8 +258,8 @@
                 <h2>Adicionar Novo Imóvel</h2>
                 <form id="add-imovel-form" method="post" action="ImovelServlet" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="titulo">Título</label>
-                        <input type="text" id="titulo" name="titulo" required>
+                        <label for="descricao">Título</label>
+                        <input type="text" id="descricao" name="descricao" required>
                     </div>
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
@@ -277,10 +277,7 @@
                         <label for="preco">Preço (MZN)</label>
                         <input type="number" id="preco" name="preco" required>
                     </div>
-                    <div class="form-group">
-                        <label for="descricao">Descrição</label>
-                        <textarea id="descricao" name="descricao" rows="4" required></textarea>
-                    </div>
+                    
                     <div class="form-group">
                         <label for="imagem">Foto do Imóvel</label>
                         <input type="file" id="imagem" name="imagem" accept="image/*" required>

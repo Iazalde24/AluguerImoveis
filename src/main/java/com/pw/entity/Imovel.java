@@ -5,6 +5,7 @@
 package com.pw.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,12 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,34 +41,38 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Imovel.findByPreco", query = "SELECT i FROM Imovel i WHERE i.preco = :preco")})
 public class Imovel implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Long id;
     @Size(max = 255)
     @Column(name = "tipo")
     private String tipo;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "disponivel")
     private boolean disponivel;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Size(min = 1, max = 255)
     @Column(name = "localizacao")
     private String localizacao;
     @Size(max = 255)
     @Column(name = "descricao")
     private String descricao;
-    @Lob
+    @Lob()
     @Column(name = "imagem")
     private byte[] imagem;
     @Basic(optional = false)
-    @NotNull
+    @NotNull()
     @Column(name = "preco")
     private double preco;
+    @OneToMany(mappedBy = "imovelId")
+    private Collection<Contrato> contratoCollection;
+    @OneToMany(mappedBy = "imovelId")
+    private Collection<Visita> visitaCollection;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Long id;
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     @ManyToOne
     private Usuario usuarioId;
@@ -90,6 +97,40 @@ public class Imovel implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public Usuario getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Usuario usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Imovel)) {
+            return false;
+        }
+        Imovel other = (Imovel) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.pw.entity.Imovel[ id=" + id + " ]";
     }
 
     public String getTipo() {
@@ -140,37 +181,22 @@ public class Imovel implements Serializable {
         this.preco = preco;
     }
 
-    public Usuario getUsuarioId() {
-        return usuarioId;
+    @XmlTransient
+    public Collection<Contrato> getContratoCollection() {
+        return contratoCollection;
     }
 
-    public void setUsuarioId(Usuario usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setContratoCollection(Collection<Contrato> contratoCollection) {
+        this.contratoCollection = contratoCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    @XmlTransient
+    public Collection<Visita> getVisitaCollection() {
+        return visitaCollection;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Imovel)) {
-            return false;
-        }
-        Imovel other = (Imovel) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.pw.entity.Imovel[ id=" + id + " ]";
+    public void setVisitaCollection(Collection<Visita> visitaCollection) {
+        this.visitaCollection = visitaCollection;
     }
     
 }

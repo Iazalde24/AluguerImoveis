@@ -51,6 +51,7 @@ public class UsuarioServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuarioId", usuario.getId());
                 session.setAttribute("usuarioNome", usuario.getNome());
+                session.setAttribute("usuarioEmail", usuario.getEmail());
                 response.sendRedirect("ImovelServlet"); // Redireciona para a página principal após o login
             } catch (NoResultException e) {
                 response.sendRedirect("index.jsp?erro=login"); // Redireciona com mensagem de erro
