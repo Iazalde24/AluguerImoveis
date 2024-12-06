@@ -2,11 +2,14 @@ C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\GerenciarImovelServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\LoginServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\entity\Usuario.java
+C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\VisitaServlet.java
+C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\AtualizarStatusServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\ImovelServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\entity\Visita.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\mycompany\t1\resources\JakartaEE8Resource.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\ImageServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\entity\Contrato.java
+C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\ContratoServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\mycompany\t1\JakartaRestConfiguration.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\CriarContratoServlet.java
 C:\Users\Edilson\Documents\NetBeansProjects\AluguerImoveis\src\main\java\com\pw\servlet\AgendarVisitaServlet.java

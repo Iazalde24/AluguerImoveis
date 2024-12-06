@@ -29,11 +29,7 @@
      
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    <header>
-    <!-- Header comum -->
-    <jsp:include page="header.jsp" />
-    </header>
+<body> 
     <!-- Seção de detalhes do imóvel -->
     <main>
         <div class="container">

@@ -12,7 +12,10 @@ com\pw\entity\Imovel.class
 com\pw\servlet\ImovelServlet.class
 com\pw\entity\Usuario.class
 com\pw\entity\Contrato_.class
+com\pw\servlet\VisitaServlet.class
 com\pw\entity\Visita_.class
 com\pw\servlet\DetalhesImovelServlet.class
+com\pw\servlet\ContratoServlet.class
 com\mycompany\t1\JakartaRestConfiguration.class
 com\pw\entity\Contrato.class
+com\pw\servlet\AtualizarStatusServlet.class

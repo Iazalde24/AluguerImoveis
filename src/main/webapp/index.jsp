@@ -1,3 +1,6 @@
+<%@page import="javax.persistence.EntityManager"%>
+<%@page import="com.pw.entity.Visita"%>
+<%@page import="com.pw.entity.Contrato"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="com.pw.entity.Imovel" %>
 <%@ page import="java.util.List" %>
@@ -33,65 +36,59 @@
 <main>
   
     <section id="home" class="section active">
-        <div class="search-section">
-            <h3>Buscar Imóveis</h3>
-            <div class="search-filter">
-                <div class="search-container">
-                    <i data-feather="search"></i>
-                    <input type="text" id="searchInput" placeholder="Pesquisar imóveis...">
-                </div>
-                <select id="propertyType">
-                    <option value="">Tipo de Imóvel</option>
-                    <option value="casa">Casa</option>
-                    <option value="apartamento">Apartamento</option>
-                    <option value="terreno">Terreno</option>
-                </select>
-                <select id="location">
-                    <option value="">Localização</option>
-                    <option value="centro">Centro</option>
-                    <option value="wimbe">Wimbe</option>
-                    <option value="chuiba">Chuiba</option>
-                </select>
-                <button id="searchBtn" class="btn btn-primary">Buscar</button>
-            </div>
+ <div class="search-section">
+    <h3>Buscar Imóveis</h3>
+    <form action="ImovelServlet" method="get" class="search-form">
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                name="searchQuery" 
+                placeholder="Pesquisar imóveis..." 
+                value="<%= request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "" %>">
+            <button type="submit" id="searchBtn" class="btn btn-primary">Buscar</button>
         </div>
+    </form>
+</div>
+
+
 <div id="imoveis-container" style="display: flex; flex-wrap: wrap;">
     <%
         List<Imovel> imoveis = (List<Imovel>) request.getAttribute("imoveisDisponiveis");
 
-        if (imoveis == null) {
-            System.out.println("Atributo 'imoveisDisponiveis' não encontrado no request.");
-    %>
-            <p>Atributo 'imoveisDisponiveis' não encontrado no request.</p>
-    <%
-        } else if (imoveis.isEmpty()) {
-            System.out.println("Atributo 'imoveisDisponiveis' está vazio.");
-    %>
-            <p>Nenhum imovel disponivel.</p>
-    <%
-        } else {
-            System.out.println("Imóveis disponíveis recebidos no JSP: " + imoveis.size());
-            for (Imovel imovel : imoveis) {
-    %>
-            <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
-                <div class="imovel-image" 
-                     style="background-image: url('<%= request.getContextPath() %>/image?id=<%= imovel.getId() %>'); 
-                            background-size: cover; 
-                            background-position: center;">
-                </div>
-                <div class="imovel-info">
-                    <h3><%= imovel.getDescricao() %></h3>
-                    <p>Localização: <%= imovel.getLocalizacao() %></p>
-                    <p>Preço: R$ <%= imovel.getPreco() %></p>
-                    <p class="<%= imovel.getDisponivel() ? "disponivel" : "indisponivel" %>">
-                        <%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %>
-                    </p>
-                </div>
+   
+    if (imoveis == null) {
+%>
+        <p>Atributo 'imoveisDisponiveis' não encontrado no request.</p>
+<%
+    } else if (imoveis.isEmpty()) {
+%>
+        <p>Nenhum imóvel encontrado para "<%= request.getParameter("searchQuery") %>".</p>
+<%
+    } else {
+
+        for (Imovel imovel : imoveis) {
+%>
+        <div class="imovel-block" onclick="window.location.href='DetalhesImovelServlet?id=<%= imovel.getId() %>'">
+            <div class="imovel-image" 
+                 style="background-image: url('<%= request.getContextPath() %>/image?id=<%= imovel.getId() %>'); 
+                        background-size: cover; 
+                        background-position: center;">
             </div>
-    <%
-            }
+            <div class="imovel-info">
+                <h3><%= imovel.getDescricao() %></h3>
+                <p>Localização: <%= imovel.getLocalizacao() %></p>
+                <p>Preço: MZN$ <%= imovel.getPreco() %></p>
+                <p class="<%= imovel.getDisponivel() ? "disponivel" : "indisponivel" %>">
+                    <%= imovel.getDisponivel() ? "Disponível" : "Indisponível" %>
+                </p>
+            </div>
+        </div>
+<%
         }
-    %>
+    }
+%>
+
 </div>
 
     </section>
@@ -288,27 +285,33 @@
         </div>
     </div>
 </section>
+   
 
     <script src="https://unpkg.com/feather-icons"></script>
 </main>
 
-<!-- Formulário de Login -->
-<div id="login-overlay" class="overlay">
+<div id="login-overlay" class="overlay" 
+     style="<%= request.getParameter("erroLogin") != null ? "display: block;" : "" %>">
     <div class="form-container">
         <span class="close-btn" onclick="closeForm('login')">&times;</span>
         <h2>Login</h2>
         <form action="UsuarioServlet" method="post">
             <input type="hidden" name="action" value="login">
             <input type="email" name="email" placeholder="Email" required>
+            <% if ("email_nao_encontrado".equals(request.getParameter("erroLogin"))) { %>
+                <p class="error-message">O e-mail informado não foi encontrado.</p>
+            <% } %>
             <input type="password" name="senha" placeholder="Senha" required>
+            <% if ("senha_invalida".equals(request.getParameter("erroLogin"))) { %>
+                <p class="error-message">Senha inválida. Por favor, tente novamente.</p>
+            <% } %>
             <button type="submit" class="button-login">Entrar</button>
         </form>
         <p class="form-footer">Não tem uma conta? <a href="#" onclick="showForm('register')">Cadastre-se</a></p>
     </div>
 </div>
-
-<!-- Formulário de Cadastro -->
-<div id="register-overlay" class="overlay">
+<div id="register-overlay" class="overlay" 
+     style="<%= request.getParameter("erroCadastro") != null ? "display: block;" : "" %>">
     <div class="form-container">
         <span class="close-btn" onclick="closeForm('register')">&times;</span>
         <h2>Cadastro</h2>
@@ -318,13 +321,52 @@
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="senha" placeholder="Senha" required>
             <input type="password" name="confirm-senha" placeholder="Confirmar Senha" required>
+
+            <% String erroCadastro = request.getParameter("erroCadastro"); %>
+            <% if ("senhas_nao_coincidem".equals(erroCadastro)) { %>
+                <p class="error-message">As senhas não coincidem. Tente novamente.</p>
+            <% } else if ("senha_invalida".equals(erroCadastro)) { %>
+                <p class="error-message">A senha deve ter ao menos 8 caracteres, incluindo letras maiúsculas, minúsculas e números.</p>
+            <% } else if ("email_existente".equals(erroCadastro)) { %>
+                <p class="error-message">O e-mail informado já está cadastrado.</p>
+            <% } %>
+
             <button type="submit" class="button-register">Cadastrar</button>
         </form>
     </div>
 </div>
-
-<!-- JavaScript -->
 <script>// Função para abrir o modal de edição
+    document.querySelectorAll("nav ul li a").forEach(link => {
+    link.addEventListener("click", function () {
+        const target = this.getAttribute("href").substring(1);
+        document.querySelectorAll("section").forEach(section => {
+            section.style.display = section.id === target ? "block" : "none";
+        });
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Função para obter o parâmetro da URL
+    function getParameterByName(name) {
+        const url = window.location.href;
+        const params = new URLSearchParams(new URL(url).search);
+        return params.get(name);
+    }
+
+    // Verifica se o parâmetro "erro" existe e exibe o modal
+    const erro1 = ("erroCadastro");
+    if (erro1 === "senhas_nao_coincidem" || erro1 === "senha_invalida" || erro1 === "email_existente") {
+        showForm("register"); // Exibe o modal de cadastro automaticamente
+       
+
+    }
+      // Verifica se o parâmetro "erro" existe e exibe o modal de login
+    const erro2 = getParameterByName("erroLogin");
+    if (erro2 === "senha_invalidaa" || erro2 === "email_nao_encontrado") {
+        showForm("login"); // Exibe o modal de login automaticamente
+    }
+});
 function openEditModal(id, descricao, tipo, localizacao, preco) {
     document.getElementById("edit-id").value = id;
     document.getElementById("edit-descricao").value = descricao;
@@ -395,7 +437,7 @@ function closeDeleteModal() {
 document.querySelectorAll('.imovel-block').forEach(item => {
     item.addEventListener('click', () => {
         const idImovel = item.getAttribute('data-id');
-        
+       
         // Realiza uma requisição para buscar os detalhes do imóvel
         fetch(`/ImovelServlet?id=` + idImovel)
             .then(response => response.text())
@@ -467,10 +509,10 @@ document.querySelectorAll('nav ul li a').forEach(link => {
         const sections = document.querySelectorAll('.section');
         sections.forEach(section => {
             section.classList.remove('active');
-            section.style.display = 'none'; 
+            section.style.display = 'none';
         });
         document.getElementById(sectionId).classList.add('active');
-        document.getElementById(sectionId).style.display = 'block'; 
+        document.getElementById(sectionId).style.display = 'block';
     }
 
     // Inicializar o estado da sessão ao carregar a página
@@ -480,6 +522,7 @@ document.querySelectorAll('nav ul li a').forEach(link => {
         }
     };
 </script>
+
  <script src="script.js"></script>
 </body>
 </html>

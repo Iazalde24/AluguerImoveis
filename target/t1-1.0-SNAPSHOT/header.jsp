@@ -19,8 +19,10 @@
             <li><a href="#contacto">Contacto</a></li>
             <% if (isUserLoggedIn) { %>
                 <li id="manageImoveisItem" style="display:block;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
+                
             <% } else { %>
                 <li id="manageImoveisItem" style="display:none;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
+                
             <% } %>
         </ul>
     </nav>
@@ -47,6 +49,7 @@
                 <% } %>
                 
                 <!-- Botão de logout -->
+                <a href="index.jsp"></a>
                 <li>
                     <form action="UsuarioServlet" method="post" style="display: inline;">
                         <input type="hidden" name="action" value="logout">

@@ -27,31 +27,48 @@ public class ImovelServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityManager em = emf.createEntityManager();
-        HttpSession session = request.getSession();
-        Long usuarioId = (Long) session.getAttribute("usuarioId");
+ @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    EntityManager em = emf.createEntityManager();
+    HttpSession session = request.getSession();
+    Long usuarioId = (Long) session.getAttribute("usuarioId");
+    String searchQuery = request.getParameter("searchQuery"); // Termo de pesquisa
 
-        try {
-            // Carregar imóveis disponíveis publicamente
-            List<Imovel> imoveisDisponiveis = em.createQuery("SELECT i FROM Imovel i WHERE i.disponivel = true", Imovel.class)
-                    .getResultList();
-            request.setAttribute("imoveisDisponiveis", imoveisDisponiveis);
+    try {
+        List<Imovel> imoveisDisponiveis;
 
-            // Carregar imóveis do usuário logado
-            if (usuarioId != null) {
-                List<Imovel> meusImoveis = em.createQuery("SELECT i FROM Imovel i WHERE i.usuarioId.id = :usuarioId", Imovel.class)
-                        .setParameter("usuarioId", usuarioId)
-                        .getResultList();
-                request.setAttribute("meusImoveis", meusImoveis);
-            }
-
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        } finally {
-            em.close();
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // Filtra imóveis pela descrição
+            imoveisDisponiveis = em.createQuery(
+                "SELECT i FROM Imovel i WHERE LOWER(i.descricao) LIKE :searchQuery AND i.disponivel = true", 
+                Imovel.class)
+                .setParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
+                .getResultList();
+        } else {
+            // Caso não tenha pesquisa, retorna todos os imóveis disponíveis
+            imoveisDisponiveis = em.createQuery(
+                "SELECT i FROM Imovel i WHERE i.disponivel = true", 
+                Imovel.class)
+                .getResultList();
         }
+
+        request.setAttribute("imoveisDisponiveis", imoveisDisponiveis);
+
+        // Carregar imóveis do usuário logado
+        if (usuarioId != null) {
+            List<Imovel> meusImoveis = em.createQuery(
+                "SELECT i FROM Imovel i WHERE i.usuarioId.id = :usuarioId", 
+                Imovel.class)
+                .setParameter("usuarioId", usuarioId)
+                .getResultList();
+            request.setAttribute("meusImoveis", meusImoveis);
+        }
+
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    } finally {
+        em.close();
     }
+}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
