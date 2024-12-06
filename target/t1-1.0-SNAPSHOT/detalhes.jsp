@@ -32,6 +32,7 @@
 <body> 
     <!-- Seção de detalhes do imóvel -->
     <main>
+         <header><%@ include file="header.jsp" %></header>
         <div class="container">
             <div class="property-header">
                 <h1><%= imovel.getDescricao() %></h1>

@@ -13,6 +13,7 @@
     if (meusImoveis == null) {
         meusImoveis = new ArrayList<>(); // Previne erro de nulidade
     }
+    
 %>
 
 
@@ -285,7 +286,11 @@
         </div>
     </div>
 </section>
-   
+        <% if (isUserLoggedIn) { %>
+        <section id="notificar" class="section hidden-section" style="display:none;">
+        
+ </section>
+    <% } %>
 
     <script src="https://unpkg.com/feather-icons"></script>
 </main>
@@ -336,14 +341,20 @@
     </div>
 </div>
 <script>// Função para abrir o modal de edição
-    document.querySelectorAll("nav ul li a").forEach(link => {
-    link.addEventListener("click", function () {
-        const target = this.getAttribute("href").substring(1);
-        document.querySelectorAll("section").forEach(section => {
-            section.style.display = section.id === target ? "block" : "none";
-        });
-    });
-});
+    
+ function atualizarStatus(tipo, id, status) {
+    fetch("AtualizarStatusServlet", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `tipo=${tipo}&id=${id}&status=${status}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        location.reload();
+    })
+    .catch(error => console.error("Erro:", error));
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -367,6 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showForm("login"); // Exibe o modal de login automaticamente
     }
 });
+
 function openEditModal(id, descricao, tipo, localizacao, preco) {
     document.getElementById("edit-id").value = id;
     document.getElementById("edit-descricao").value = descricao;

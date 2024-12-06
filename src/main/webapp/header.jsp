@@ -19,10 +19,10 @@
             <li><a href="#contacto">Contacto</a></li>
             <% if (isUserLoggedIn) { %>
                 <li id="manageImoveisItem" style="display:block;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
-                
+                 <li style="display:block;"> <a href="#notificar"> Notificacao</a></li>
             <% } else { %>
                 <li id="manageImoveisItem" style="display:none;"><a href="#gerenciar">Gerenciar Imóveis</a></li>
-                
+                 <li style="display:none;"> <a href="#notificar"> Notificacao</a></li>
             <% } %>
         </ul>
     </nav>
