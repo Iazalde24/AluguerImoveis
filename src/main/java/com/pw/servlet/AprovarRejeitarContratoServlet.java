@@ -36,7 +36,7 @@ public class AprovarRejeitarContratoServlet extends HttpServlet {
                 em.merge(contrato);
                 em.getTransaction().commit();
             }
-            response.sendRedirect("NotificarContratoServlet"); // Atualiza a lista de contratos
+            response.sendRedirect("ImovelServlet"); // Atualiza a lista de contratos
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao processar contrato.");

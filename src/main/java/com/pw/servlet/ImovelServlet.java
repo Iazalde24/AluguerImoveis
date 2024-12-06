@@ -1,7 +1,7 @@
 package com.pw.servlet;
 
 import com.pw.entity.Imovel;
-import com.pw.entity.Usuario;
+import com.pw.entity.*;
 import javax.persistence.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -27,48 +27,61 @@ public class ImovelServlet extends HttpServlet {
         }
     }
 
- @Override
-protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    EntityManager em = emf.createEntityManager();
-    HttpSession session = request.getSession();
-    Long usuarioId = (Long) session.getAttribute("usuarioId");
-    String searchQuery = request.getParameter("searchQuery"); // Termo de pesquisa
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        EntityManager em = emf.createEntityManager();
+        HttpSession session = request.getSession();
+        Long usuarioId = (Long) session.getAttribute("usuarioId");
+        String searchQuery = request.getParameter("searchQuery"); // Termo de pesquisa
 
-    try {
-        List<Imovel> imoveisDisponiveis;
+        try {
+            List<Imovel> imoveisDisponiveis;
 
-        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            // Filtra imóveis pela descrição
-            imoveisDisponiveis = em.createQuery(
-                "SELECT i FROM Imovel i WHERE LOWER(i.descricao) LIKE :searchQuery AND i.disponivel = true", 
-                Imovel.class)
-                .setParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
-                .getResultList();
-        } else {
-            // Caso não tenha pesquisa, retorna todos os imóveis disponíveis
-            imoveisDisponiveis = em.createQuery(
-                "SELECT i FROM Imovel i WHERE i.disponivel = true", 
-                Imovel.class)
-                .getResultList();
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                // Filtra imóveis pela descrição
+                imoveisDisponiveis = em.createQuery(
+                    "SELECT i FROM Imovel i WHERE LOWER(i.descricao) LIKE :searchQuery AND i.disponivel = true", 
+                    Imovel.class)
+                    .setParameter("searchQuery", "%" + searchQuery.toLowerCase() + "%")
+                    .getResultList();
+            } else {
+                // Caso não tenha pesquisa, retorna todos os imóveis disponíveis
+                imoveisDisponiveis = em.createQuery(
+                    "SELECT i FROM Imovel i WHERE i.disponivel = true", 
+                    Imovel.class)
+                    .getResultList();
+            }
+
+            request.setAttribute("imoveisDisponiveis", imoveisDisponiveis);
+
+            // Carregar imóveis do usuário logado
+            if (usuarioId != null) {
+                List<Imovel> meusImoveis = em.createQuery(
+                    "SELECT i FROM Imovel i WHERE i.usuarioId.id = :usuarioId", 
+                    Imovel.class)
+                    .setParameter("usuarioId", usuarioId)
+                    .getResultList();
+                request.setAttribute("meusImoveis", meusImoveis);
+                
+                // Buscar contratos pendentes do usuário
+                List<Contrato> contratosPendentes = em.createQuery(
+                    "SELECT c FROM Contrato c " +
+                "JOIN c.imovelId i " +
+                "WHERE i.usuarioId.id = :usuarioId " + // Verifica se o usuário logado é o proprietário do imóvel
+                "AND c.status = 'PENDENTE'", 
+                    Contrato.class)
+                    .setParameter("usuarioId", usuarioId)
+                    .getResultList();
+                
+                // Adicionar os contratos pendentes no request para exibição na página
+                request.setAttribute("contratosPendentes", contratosPendentes);
+            }
+
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        } finally {
+            em.close();
         }
-
-        request.setAttribute("imoveisDisponiveis", imoveisDisponiveis);
-
-        // Carregar imóveis do usuário logado
-        if (usuarioId != null) {
-            List<Imovel> meusImoveis = em.createQuery(
-                "SELECT i FROM Imovel i WHERE i.usuarioId.id = :usuarioId", 
-                Imovel.class)
-                .setParameter("usuarioId", usuarioId)
-                .getResultList();
-            request.setAttribute("meusImoveis", meusImoveis);
-        }
-
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-    } finally {
-        em.close();
     }
-}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -120,8 +133,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
             em.close();
         }
     }
-    
-    
 
     @Override
     public void destroy() {

@@ -286,11 +286,50 @@
         </div>
     </div>
 </section>
-        <% if (isUserLoggedIn) { %>
-        <section id="notificar" class="section hidden-section" style="display:none;">
-        
- </section>
-    <% } %>
+      <%-- Section de Notificação --%>
+<%-- Verifica se o usuário está logado --%>
+<% if (isUserLoggedIn) { %>
+    <section id="notificar" class="section">
+        <h2>Contratos Pendentes</h2>
+
+        <% List<Contrato> contratosPendentes = (List<Contrato>) request.getAttribute("contratosPendentes"); %>
+
+        <%-- Verifica se há contratos pendentes --%>
+        <% if (contratosPendentes != null && !contratosPendentes.isEmpty()) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Início</th>
+                        <th>Fim</th>
+                        <th>Imóvel</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%-- Exibe os contratos pendentes --%>
+                    <% for (Contrato contrato : contratosPendentes) { %>
+                        <tr>
+                            <td><%= contrato.getId() %></td>
+                            <td><%= contrato.getDataInicio() %></td>
+                            <td><%= contrato.getDataFim() %></td>
+                            <td><%= contrato.getImovelId().getDescricao() %></td>
+                            <td>
+                                <form action="AprovarRejeitarContratoServlet" method="post">
+                                    <input type="hidden" name="contratoId" value="<%= contrato.getId() %>">
+                                    <button type="submit" name="action" value="aprovar">Aprovar</button>
+                                    <button type="submit" name="action" value="rejeitar">Rejeitar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p>Não há contratos pendentes.</p>
+        <% } %>
+    </section>
+<% } %>
 
     <script src="https://unpkg.com/feather-icons"></script>
 </main>
@@ -533,6 +572,7 @@ document.querySelectorAll('nav ul li a').forEach(link => {
             showUserMenu("<%= usuarioNome %>");
         }
     };
+    
 </script>
 
  <script src="script.js"></script>
